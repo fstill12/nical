@@ -19,12 +19,12 @@ def gets_data_arr(arr: List[Any], valeu: Any) -> Union[Tuple[Any], int]:
     else:
         return -1
 
-if __name__ == "__main__":
-    # nama-nama tuts
-    NOTE_NAMES = ['C', 'C_Sharp', 'D', 'D_Sharp', 'E', 'F',
-                'F_Sharp', 'G', 'G_Sharp', 'A', 'A_Sharp', 'B']
+# if __name__ == "__main__":
+#     NOTE_NAMES = ['C', 'C_Sharp', 'D', 'D_Sharp', 'E', 'F',
+#                 'F_Sharp', 'G', 'G_Sharp', 'A', 'A_Sharp', 'B']
 
-    arr = [1, 2, 3, 4]
-    print(arr.index(1))
-    print(gets_data_arr(NOTE_NAMES, 'r'))
-    print(rotate_left(arr, 1))
+#     data = gets_data_arr(NOTE_NAMES, 'A')
+#     rotasi = rotate_left(NOTE_NAMES, data[0])
+#     print(NOTE_NAMES)
+#     print(data)
+#     print(rotasi)
