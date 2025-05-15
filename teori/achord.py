@@ -36,7 +36,7 @@ def achord(note_tuts: List[str], tuts: str, q: List[str]) -> Tuple[str]:
         if i < len(rotasi):
             data.append(rotasi[i])
         else:
-           data.append(rotasi[ i % len(q) ]) 
+           data.append(rotasi[ i % len(rotasi) ]) 
     return data
 
 
@@ -50,6 +50,6 @@ if __name__ == "__main__":
     print(data)
     print(rotasi)
     print()
-    print(rotate_array(NOTE_NAMES, 'A'))
+    print(rotate_array(NOTE_NAMES, 'D'))
     print()
     print(achord(note_tuts=NOTE_NAMES, tuts="C", q=[0, 4, 7, 21]))
