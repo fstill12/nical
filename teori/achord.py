@@ -1,36 +1,42 @@
 from collections import deque
-from typing import List, Union, Tuple
+from typing import List, Union
+
+type Skala = List[str]
+type SkalaBaru = List[str]
+type isiSkala = str
+type NomorTuts = List[int]
+type Tuts = str
 
 
-def rotate_left(arr: List[any], pivot: int) -> List[any]:
+def rotate_left(arr: Skala, pivot: int) -> SkalaBaru:
     """
-    Rotasi ke kiri dengan posisi pivot.
+    Rotasi skala ke kiri dengan posisi pivot.
     """
     arr = deque(arr)
     arr.rotate(-pivot)  # negatif berarti geser ke kiri
     return list(arr)
 
-def gets_data_arr(arr: List[any], valeu: any) -> Union[int, List[any]]: 
+def gets_data_arr(arr: Skala, valeu: isiSkala) -> Union[int, isiSkala]: 
     """
-    Mengambil indeks array berdasarkan isinya.
+    Mengambil indeks skala berdasarkan isinya.
     """
     if valeu in arr:
         return arr.index(valeu)
     else:
-        return arr
+        return -1
     
-def rotate_array(arr: List[any], valeu: any) -> List[any]:
+def rotate_array(arr: Skala, valeu: isiSkala) -> SkalaBaru:
     """
-    Merotasi dan membuat array baru berdasarkan value.
+    Merotasi dan membuat skala baru berdasarkan nilainya.
     """
     data = gets_data_arr(arr=arr, valeu=valeu) 
     return rotate_left(arr=arr, pivot=data)
 
-def achord(note_tuts: List[str], tuts: str, q: List[str]) -> Tuple[str]:
+def achord(note: Skala, tuts: Tuts, q: NomorTuts) -> SkalaBaru:
     """
-    Membuat akor berdasarkan array q dan tuts
+    Membuat akor berdasarkan nomor tuts dan tuts
     """
-    rotasi = rotate_array(arr=note_tuts, valeu=tuts)
+    rotasi = rotate_array(arr=note, valeu=tuts)
     return [ rotasi[a] if a < len(rotasi) else rotasi[ a % len(rotasi) ]  for a in q]
 
 
