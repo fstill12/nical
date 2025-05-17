@@ -1,17 +1,27 @@
 import argparse
+from teori import achord
+
+
+def valid_str(value: str) -> str:
+    if any(char.isdigit() for char in value):
+        raise argparse.ArgumentTypeError(f"""Kesalahan : Input {value} mengandung angka.
+                                             Perbaiki : Hanya tangga nada kromatik yang diterima.""")
+    return value
+
+def run(args: argparse.ArgumentParser):
+    NOTE_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+    kunci = args.tuts.title()
+    if args.verbose:
+        print(f"akor {kunci} = {achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7])}")
+    else:
+        print(achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7]))
+
 
 # Membuat objek parser
-parser = argparse.ArgumentParser(description="Contoh program parser argumen")
-
-# Menambahkan argumen yang dapat diterima
-parser.add_argument('--nama', type=str, help="Nama pengguna")
-parser.add_argument('--umur', type=int, help="Umur pengguna")
-parser.add_argument('--kota', type=str, help="Kota tempat tinggal", default="Tidak diketahui")
-
+parser = argparse.ArgumentParser(prog="Nical", description="Nical aplikasi membuat akor", allow_abbrev=False)
+parser.add_argument('--tuts', '-t', type=valid_str, help="Jenis tuts")
+parser.add_argument('--verbose', '-v', action="store_true")
+parser.set_defaults(func=run)
 # Mengurai argumen yang diberikan
 args = parser.parse_args()
-
-# Menampilkan hasil
-print(f"Nama: {args.nama}")
-print(f"Umur: {args.umur}")
-print(f"Kota: {args.kota}")
+args.func(args)
