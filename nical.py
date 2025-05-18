@@ -1,5 +1,6 @@
 import argparse
 from teori import achord, Interval
+from teori import achord, Note
 
 
 def valid_str(value: str) -> str:
@@ -9,7 +10,6 @@ def valid_str(value: str) -> str:
     return value
 
 def run(args: argparse.ArgumentParser):
-    NOTE_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
     try:
         kunci = args.tuts.title()
     except AttributeError:
@@ -17,8 +17,10 @@ def run(args: argparse.ArgumentParser):
     else:
         if args.verbose:
             print(f"akor {kunci} = {achord(note=NOTE_NAMES, tuts=kunci, q=Interval.mayor)}")
+            print(f"akor {kunci} = {achord(note=Note.flat, tuts=kunci, q=[0, 4, 7, 21])}")
         else:
             print(achord(note=NOTE_NAMES, tuts=kunci, q=Interval.mayor))
+            print(achord(note=Note.flat, tuts=kunci, q=[0, 4, 7]))
 
 if __name__=="__main__":
     # Membuat objek parser
