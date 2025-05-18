@@ -1,6 +1,5 @@
 import argparse
-from teori import achord, Interval
-from teori import achord, Note
+from teori import achord, Interval, Note
 
 
 def valid_str(value: str) -> str:
@@ -16,11 +15,9 @@ def run(args: argparse.ArgumentParser):
         print("Kesalahan : perintah --tuts or -t adalah objek bertipe 'NoneType'")
     else:
         if args.verbose:
-            print(f"akor {kunci} = {achord(note=NOTE_NAMES, tuts=kunci, q=Interval.mayor)}")
-            print(f"akor {kunci} = {achord(note=Note.flat, tuts=kunci, q=[0, 4, 7, 21])}")
+            print(f"akor {kunci} = {achord(note=Note.flat, tuts=kunci, q=Interval.mayor)}")
         else:
-            print(achord(note=NOTE_NAMES, tuts=kunci, q=Interval.mayor))
-            print(achord(note=Note.flat, tuts=kunci, q=[0, 4, 7]))
+            print(achord(note=Note.flat, tuts=kunci, q=Interval.mayor))
 
 if __name__=="__main__":
     # Membuat objek parser
