@@ -20,12 +20,12 @@ def run(args: argparse.ArgumentParser):
         else:
             print(achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7]))
 
-
-# Membuat objek parser
-parser = argparse.ArgumentParser(prog="Nical", description="Nical aplikasi membuat akor", allow_abbrev=False)
-parser.add_argument('--tuts', '-t', type=valid_str, help="Jenis tuts")
-parser.add_argument('--verbose', '-v', action="store_true")
-parser.set_defaults(func=run)
-# Mengurai argumen yang diberikan
-args = parser.parse_args()
-args.func(args)
+if __name__=="__main__":
+    # Membuat objek parser
+    parser = argparse.ArgumentParser(prog="Nical", description="Nical aplikasi membuat akor", allow_abbrev=False)
+    parser.add_argument('--tuts', '-t', type=valid_str, help="Jenis tuts")
+    parser.add_argument('--verbose', '-v', action="store_true")
+    parser.set_defaults(func=run)
+    # Mengurai argumen yang diberikan
+    args = parser.parse_args()
+    args.func(args)
