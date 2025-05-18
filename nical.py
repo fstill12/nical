@@ -10,11 +10,15 @@ def valid_str(value: str) -> str:
 
 def run(args: argparse.ArgumentParser):
     NOTE_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-    kunci = args.tuts.title()
-    if args.verbose:
-        print(f"akor {kunci} = {achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7])}")
+    try:
+        kunci = args.tuts.title()
+    except AttributeError:
+        print("Kesalahan : perintah --tuts or -t adalah objek bertipe 'NoneType'")
     else:
-        print(achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7]))
+        if args.verbose:
+            print(f"akor {kunci} = {achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7])}")
+        else:
+            print(achord(note=NOTE_NAMES, tuts=kunci, q=[0, 4, 7]))
 
 
 # Membuat objek parser
