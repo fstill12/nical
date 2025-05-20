@@ -18,10 +18,9 @@ def validate_tuts(tuts: str) -> str | None:
 
 def get_qualitas(args) -> str | None:
     """Dapatkan interval kualitas berdasarkan argumen."""
-    if args.minor:
-        return "minor"
-    if args.mayor:
-        return "mayor"
+    qualitas = [args.minor, args.mayor, args.diminished, args.augmented]
+    if any(qualitas):
+        return qualitas
     return None
 
 def get_notasi(args) -> str | None:
@@ -35,7 +34,7 @@ def get_notasi(args) -> str | None:
 def validate_args(args) -> str | None:
     """Validasi interval dan notasi, kembalikan pesan error jika perlu."""
     if get_qualitas(args) is None:
-        return "Kesalahan: Pilih salah satu interval --minor (-m) atau --mayor (-M)."
+        return "Kesalahan: Pilih salah satu interval --minor (-m), --mayor (-M), --diminished (-dim) atau --augmented (-aug)."
     if get_notasi(args) is None:
         return "Kesalahan: Pilih salah satu notasi --sharp (-s) atau --flat (-f)."
     return None
@@ -55,14 +54,16 @@ def run(args: argparse.Namespace):
 
     # Ambil parameter yang sudah pasti valid
     kunci = args.tuts.title()
-    q = Interval.minor if args.minor else Interval.mayor
+    dval = [ a for a, b in enumerate(get_qualitas(args)) if b == True ]
+    interval = [Interval.mayor, Interval.minor, Interval.dim, Interval.aug]
     n = Note.sharp if args.sharp else Note.flat
-
-    hasil = achord(note=n, tuts=kunci, q=q)
-    if args.verbose:
-        print(f"akor {kunci} = {hasil}")
-    else:
-        print(hasil)
+    print(dval)
+    for i in dval:
+        hasil = achord(note=n, tuts=kunci, q=interval[i])
+        if args.verbose:
+            print(f"akor {kunci} = {hasil}")
+        else:
+            print(hasil)
 
 
 if __name__ == "__main__":
@@ -71,6 +72,8 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', '-v', action="store_true", help="Tampilkan hasil secara lengkap")
     parser.add_argument('--mayor', '-M', action="store_true", help="Gunakan akor mayor")
     parser.add_argument('--minor', '-m', action="store_true", help="Gunakan akor minor")
+    parser.add_argument('--diminished', '-dim', action="store_true", help="Gunakan akor diminished")
+    parser.add_argument('--augmented', '-aug', action="store_true", help="Gunakan akor augmented")
     parser.add_argument('--sharp', '-s', action="store_true", help="Gunakan notasi dengan # (kres)")
     parser.add_argument('--flat', '-f', action="store_true", help="Gunakan notasi dengan b (mol)")
     parser.set_defaults(func=run)
