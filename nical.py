@@ -57,7 +57,6 @@ def run(args: argparse.Namespace):
     dval = [ a for a, b in enumerate(get_qualitas(args)) if b == True ]
     interval = [Interval.mayor, Interval.minor, Interval.dim, Interval.aug]
     n = Note.sharp if args.sharp else Note.flat
-    print(dval)
     for i in dval:
         hasil = achord(note=n, tuts=kunci, q=interval[i])
         if args.verbose:
