@@ -18,14 +18,9 @@ def validate_tuts(tuts: str) -> str | None:
 
 def get_qualitas(args) -> str | None:
     """Dapatkan interval kualitas berdasarkan argumen."""
-    if args.minor:
-        return "minor"
-    if args.mayor:
-        return "mayor"
-    if args.diminished:
-        return "diminished"
-    if args.augmented:
-        return "augmented"
+    qualitas = [args.minor, args.mayor, args.diminished, args.augmented]
+    if any(qualitas):
+        return qualitas
     return None
 
 def get_notasi(args) -> str | None:
@@ -59,7 +54,7 @@ def run(args: argparse.Namespace):
 
     # Ambil parameter yang sudah pasti valid
     kunci = args.tuts.title()
-    dval = [ a for a, b in enumerate([args.minor, args.mayor, args.diminished, args.augmented]) if b == True ]
+    dval = [ a for a, b in enumerate(get_qualitas(args)) if b == True ]
     interval = [Interval.mayor, Interval.minor, Interval.dim, Interval.aug]
     n = Note.sharp if args.sharp else Note.flat
     print(dval)
