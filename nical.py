@@ -1,5 +1,6 @@
 import argparse
 from teori import achord, Interval, Note
+from teori.interval import mayor, minor, diminished, augmented
 import re
 
 def is_valid_str(tuts: str) -> bool:
@@ -18,7 +19,7 @@ def validate_tuts(tuts: str) -> str | None:
 
 def get_qualitas(args) -> str | None:
     """Dapatkan interval kualitas berdasarkan argumen."""
-    qualitas = [args.minor, args.mayor, args.diminished, args.augmented]
+    qualitas = [args.mayor, args.minor, args.diminished, args.augmented]
     if any(qualitas):
         return qualitas
     return None
@@ -55,14 +56,20 @@ def run(args: argparse.Namespace):
     # Ambil parameter yang sudah pasti valid
     kunci = args.tuts.title()
     dval = [ a for a, b in enumerate(get_qualitas(args)) if b == True ]
-    interval = [Interval.mayor, Interval.minor, Interval.dim, Interval.aug]
+    print(dval)
+    interval = [mayor.simbol["mayor"], minor.simbol["minor"], diminished.simbol["diminished"], augmented.simbol["augmented"]]
+    jval = [mayor.simbol["title"], minor.simbol["title"], diminished.simbol["title"], augmented.simbol["title"]]
     n = Note.sharp if args.sharp else Note.flat
     for i in dval:
-        hasil = achord(note=n, tuts=kunci, q=interval[i])
-        if args.verbose:
-            print(f"akor {kunci} = {hasil}")
-        else:
-            print(hasil)
+        print()
+        print(f"tangga nada {jval[i]}".title())
+        print()
+        for x, y in interval[i].items():
+            hasil = achord(note=n, tuts=kunci, q=y)
+            if args.verbose:
+                print(f"akor {x} = {hasil}")
+            else:
+                print(hasil)
 
 
 if __name__ == "__main__":
