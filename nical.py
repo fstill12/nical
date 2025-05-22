@@ -1,5 +1,5 @@
 import argparse
-from teori import achord, Interval, Note
+from teori import achord, Note
 from teori.interval import mayor, minor, diminished, augmented
 import re
 
