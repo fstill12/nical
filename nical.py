@@ -67,7 +67,7 @@ def run(args: argparse.Namespace):
         for x, y in interval[i].items():
             hasil = achord(note=n, tuts=kunci, q=y)
             if args.verbose:
-                print(f"akor {x} = {hasil}")
+                print(f"akor {x.replace("C", kunci)} = {hasil}")
             else:
                 print(hasil)
 
