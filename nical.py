@@ -71,10 +71,15 @@ def main():
     suggest_parser = subparsers.add_parser("suggest", help="(Dalam pengembangan) Rekomendasi progresi akor")
     suggest_parser.set_defaults(func=run_placeholder("suggest"))
 
-    # Jika hanya menjalankan tanpa argumen sama sekali
-    if len(sys.argv) == 1:
+    nc = sys.argv
+    if len(nc) == 1:
         parser.print_help()
-        sys.exit(1)
+        sys.exit()
+    else:
+        # tangani bantuan khusus subcammand
+        if " ".join(nc[1:]) in "chord -h --help":
+            chord_parser.print_help()
+            sys.exit()
     args = parser.parse_args()
     args.func(args)
 
