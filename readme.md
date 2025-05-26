@@ -1,12 +1,12 @@
-# 🎹 Nical - Aplikasi CLI Pembuat Akor
+# 🎹 Nical - Aplikasi CLI Pembuat Akor Musik
 
-**Nical** adalah aplikasi berbasis command-line interface (CLI) untuk membantu kamu membuat akor musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, siswa teori musik, maupun developer musik digital.
+**Nical** adalah aplikasi berbasis antarmuka baris perintah (CLI) untuk membantu kamu membuat akor musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, pelajar teori musik, maupun developer musik digital.
 
 ---
 
 ## 📦 Instalasi
 
-Pastikan kamu sudah menginstal Python dan pustaka `teori`.
+Pastikan kamu sudah menginstal Python dan pustaka `teori` terlebih dahulu:
 
 ```bash
 pip install teori
@@ -14,51 +14,67 @@ pip install teori
 
 ---
 
-## 🚀 Penggunaan
+## 🚀 Cara Penggunaan
 
 ```bash
-python nical.py -t TUTS -i INTERVAL -n NOTASI [--verbose]
+python nical.py <perintah> [opsi...]
 ```
 
-### 🔧 Argumen
+### ✅ Perintah Utama yang Tersedia
 
-| Argumen      | Alias | Wajib    | Keterangan                                                  |
-| ------------ | ----- | -------- | ----------------------------------------------------------- |
-| `--tuts`     | `-t`  | ✅        | Tuts dasar, misal `C`, `D#`, `Bb`                           |
-| `--interval` | `-i`  | ✅        | Jenis interval: `mayor`, `minor`, `diminished`, `augmented` |
-| `--notasi`   | `-n`  | ✅        | Notasi nada: `sharp` (untuk `#`) atau `flat` (untuk `b`)    |
-| `--verbose`  | `-v`  | opsional | Tampilkan akor lengkap dengan nama                          |
+#### 🎼 `chord` – Buat akor berdasarkan tuts
+
+```bash
+python nical.py chord -t TUTS -i INTERVAL -n NOTASI [--verbose]
+```
+
+| Argumen      | Alias | Wajib    | Keterangan                                                       |
+| ------------ | ----- | -------- | ---------------------------------------------------------------- |
+| `--tuts`     | `-t`  | ✅        | Tuts dasar, misalnya `C`, `D#`, `Bb`                             |
+| `--interval` | `-i`  | ✅        | Jenis interval akor: `mayor`, `minor`, `diminished`, `augmented` |
+| `--notasi`   | `-n`  | ✅        | Jenis notasi: `sharp` (untuk `#`) atau `flat` (untuk `b`)        |
+| `--verbose`  | `-v`  | opsional | Tampilkan hasil akor lengkap dengan nama bentuk akor             |
+
+📌 *Gunakan `--verbose` untuk menampilkan bentuk dan nama akor yang lebih detail.*
 
 ---
 
-## 🧪 Contoh
+## 🧪 Contoh Penggunaan
 
-### 1. Akor minor dari tuts D menggunakan notasi kres (`#`)
+### 1. Menampilkan akor **minor** dari tuts **D** dengan notasi kres (`#`):
 
 ```bash
-python nical.py -t D -i minor -n sharp
+python nical.py chord -t D -i minor -n sharp
 ```
 
-### 2. Akor mayor dari Bb dalam notasi mol (`b`) dengan hasil lengkap
+### 2. Menampilkan akor **mayor** dari tuts **Bb** dengan notasi mol (`b`) dan hasil lengkap:
 
 ```bash
-python nical.py -t Bb -i mayor -n flat --verbose
+python nical.py chord -t Bb -i mayor -n flat --verbose
 ```
 
 ---
 
-## 🧠 Catatan
+### 🚧 Perintah Lain (Dalam Pengembangan)
 
-* Tuts bisa menggunakan `#` atau `b` (misal `F#`, `Eb`).
-* Gunakan `--verbose` untuk melihat hasil akor disertai nama bentuknya.
-* Program ini cocok untuk eksplorasi harmoni dasar dan susunan akor.
+| Perintah  | Status         | Keterangan                                               |
+| --------- | -------------- | -------------------------------------------------------- |
+| `scale`   | 🔧 Akan datang | Tangga nada berdasarkan tuts dan jenis skala             |
+| `analyze` | 🔧 Akan datang | Analisis akor dari input                                 |
+| `suggest` | 🔧 Akan datang | Rekomendasi progresi akor yang cocok berdasarkan konteks |
+
+📭 *Perintah-perintah di atas akan tersedia dalam versi mendatang. Nantikan pembaruannya!*
 
 ---
 
-## 💡 Lisensi
+## 💡 Catatan Tambahan
+
+* Input `tuts` hanya boleh terdiri dari huruf `A`–`G` disertai opsional `#` atau `b`.
+* Aplikasi cocok untuk eksplorasi harmoni dan belajar teori musik dasar.
+* Cocok digunakan untuk pelajar maupun musisi digital.
+
+---
+
+## 📜 Lisensi
 
 MIT License © 2025
-
----
-
-Jika kamu ingin, aku juga bisa bantu buat versi berbahasa Indonesia seluruhnya atau markdown dengan emoji dan hiasan CLI-style lainnya.
