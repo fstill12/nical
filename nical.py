@@ -99,19 +99,19 @@ def main():
     # chord
     chord_parser = subparsers.add_parser("chord", help="Buat akor berdasarkan tuts")
     chord_parser.add_argument("-t", "--tuts", required=True, help="Tuts dasar (misal: C, D#, Bb)")
-    chord_parser.add_argument("-i", "--interval", required=True, choices=["mayor", "minor", "diminished", "augmented"], help="Jenis interval akor")
-    chord_parser.add_argument("-n", "--notasi", required=True, choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
+    chord_parser.add_argument("-i", "--interval", choices=["mayor", "minor", "diminished", "augmented"], help="Jenis interval akor")
+    chord_parser.add_argument("-n", "--notasi", choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
     chord_parser.add_argument("-v", "--verbose", action="store_true", help="Tampilkan hasil lengkap")
     chord_parser.set_defaults(func=run_chord)
 
     # scale
     scale_parser = subparsers.add_parser("scale", help="(Dalam pengembangan) Buat tangga nada")
-    scale_parser.add_argument("-t", "--tuts", required=True, help="Tuts dasar (misal: C, D#, Bb)")
+    scale_parser.add_argument("-t", "--tuts", help="Tuts dasar (misal: C, D#, Bb)")
     scale_parser.add_argument("-i", "--interval", 
-                              required=True, choices=["mayor", "minor", "minor_natural", 
+                              choices=["mayor", "minor", "minor_natural", 
                                                       "minor_harmonik", "minor_melodik", "kromatik"], 
                               help="Jenis interval akor")
-    scale_parser.add_argument("-n", "--notasi", required=True, choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
+    scale_parser.add_argument("-n", "--notasi", choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
     scale_parser.add_argument("-v", "--verbose", action="store_true", help="Tampilkan hasil lengkap")
     scale_parser.set_defaults(func=run_scale)
 
