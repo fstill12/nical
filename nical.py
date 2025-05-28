@@ -4,6 +4,8 @@ from teori.interval import mayor, minor, diminished, augmented, rumus_tangga_nad
 import re
 import sys
 
+# nical.py - Aplikasi pembuat akor musik
+
 # universal
 def convert_tuts_to_notasi(tuts: str, notasi: str) -> str:
     """Konversi tuts ke notasi yang sesuai (sharp/flat)."""
