@@ -1,6 +1,6 @@
 import argparse
 from teori import achord, Note
-from teori.interval import mayor, minor, diminished, augmented
+from teori.interval import mayor, minor, diminished, augmented, rumus_tangga_nada
 import re
 import sys
 
@@ -41,6 +41,33 @@ def run_chord(args: argparse.Namespace):
             print(f"Akor {x.replace('C', kunci)} = {hasil}")
         else:
             print(hasil)
+            print()
+
+def run_scale(args: argparse.Namespace):
+    error = validate_tuts(args.tuts)
+    if error:
+        print(error)
+        return
+    
+    kunci = args.tuts.title()
+    # n = Note.sharp if args.notasi == "sharp" else Note.flat
+
+    mapping = {
+        "mayor": "mayor",
+        "minor": "minor",
+        "minor_natural": "minor",
+        "minor_harmonik": "minor_harmonik",
+        "minor_melodik": "minor_melodik",
+        "kromatik": "kromatik"
+    }
+    map = mapping[args.interval]
+    interval = Note.tangga_nada["tangga_nada"][map]
+    rtn = rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval)
+    print()
+    print(f"Tangga nada {kunci}")
+    print()
+    print(f"{kunci} {map.title()} = {rtn}")
+    print()
 
 def run_placeholder(command_name: str):
     def _inner(_args):
@@ -61,7 +88,14 @@ def main():
 
     # scale
     scale_parser = subparsers.add_parser("scale", help="(Dalam pengembangan) Buat tangga nada")
-    scale_parser.set_defaults(func=run_placeholder("scale"))
+    scale_parser.add_argument("-t", "--tuts", required=True, help="Tuts dasar (misal: C, D#, Bb)")
+    scale_parser.add_argument("-i", "--interval", 
+                              required=True, choices=["mayor", "minor", "minor_natural", 
+                                                      "minor_harmonik", "minor_melodik", "kromatik"], 
+                              help="Jenis interval akor")
+    scale_parser.add_argument("-n", "--notasi", required=True, choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
+    scale_parser.add_argument("-v", "--verbose", action="store_true", help="Tampilkan hasil lengkap")
+    scale_parser.set_defaults(func=run_scale)
 
     # analyze
     analyze_parser = subparsers.add_parser("analyze", help="(Dalam pengembangan) Analisa akor")
@@ -79,6 +113,9 @@ def main():
         # tangani bantuan khusus subcammand
         if " ".join(nc[1:]) in "chord -h --help":
             chord_parser.print_help()
+            sys.exit()
+        if " ".join(nc[1:]) in "scale -h --help":
+            scale_parser.print_help()
             sys.exit()
     args = parser.parse_args()
     args.func(args)
