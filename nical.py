@@ -50,7 +50,7 @@ def run_scale(args: argparse.Namespace):
         return
     
     kunci = args.tuts.title()
-    # n = Note.sharp if args.notasi == "sharp" else Note.flat
+    n = Note.sharp if args.notasi == "sharp" else Note.flat
 
     mapping = {
         "mayor": "mayor",
@@ -62,9 +62,11 @@ def run_scale(args: argparse.Namespace):
     }
     map = mapping[args.interval]
     interval = Note.tangga_nada["tangga_nada"][map]
-    rtn = rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval)
-    print()
-    print(f"Tangga nada {kunci}")
+    rtn = rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval, use=n)
+    # permasalahan baru = scale -t c# -i mayor -n flat
+    if args.verbose:
+        print()
+        print(f"Tangga nada {kunci}")
     print()
     print(f"{kunci} {map.title()} = {rtn}")
     print()
@@ -75,7 +77,9 @@ def run_placeholder(command_name: str):
     return _inner
 
 def main():
-    parser = argparse.ArgumentParser(prog="nical", description="🎵 Nical - Aplikasi pembuat akor musik")
+    parser = argparse.ArgumentParser(prog="nical", 
+                                     description="🎵 Nical - Aplikasi pembuat akor musik",
+                                     formatter_class=argparse.RawTextHelpFormatter)
     subparsers = parser.add_subparsers(title="perintah", dest="command", required=True)
 
     # chord
