@@ -1,6 +1,6 @@
 # 🎹 Nical - Aplikasi CLI Pembuat Akor Musik
 
-**Nical** adalah aplikasi berbasis antarmuka baris perintah (CLI) untuk membantu kamu membuat akor musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, pelajar teori musik, maupun developer musik digital.
+**Nical** adalah aplikasi antarmuka baris perintah (CLI) untuk membantu kamu membuat akor dan tangga nada musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, pelajar teori musik, maupun developer musik digital.
 
 ---
 
@@ -35,7 +35,30 @@ python nical.py chord -t TUTS -i INTERVAL -n NOTASI [--verbose]
 | `--notasi`   | `-n`  | ✅        | Jenis notasi: `sharp` (untuk `#`) atau `flat` (untuk `b`)        |
 | `--verbose`  | `-v`  | opsional | Tampilkan hasil akor lengkap dengan nama bentuk akor             |
 
-📌 *Gunakan `--verbose` untuk menampilkan bentuk dan nama akor yang lebih detail.*
+#### 🎵 `scale` – Buat tangga nada
+
+```bash
+python nical.py scale -t TUTS -i INTERVAL -n NOTASI [--verbose]
+```
+
+| Argumen      | Alias | Wajib    | Keterangan                                                                                  |
+| ------------ | ----- | -------- | ------------------------------------------------------------------------------------------- |
+| `--tuts`     | `-t`  | ✅        | Tuts dasar, misalnya `C`, `D#`, `Bb`                                                        |
+| `--interval` | `-i`  | ✅        | Jenis interval: `mayor`, `minor`, `minor_natural`, `minor_harmonik`, `minor_melodik`, `kromatik` |
+| `--notasi`   | `-n`  | ✅        | Jenis notasi: `sharp` (untuk `#`) atau `flat` (untuk `b`)                                   |
+| `--verbose`  | `-v`  | opsional | Tampilkan hasil lengkap                                                                     |
+
+#### 🔍 `analyze` – Analisa akor (dalam pengembangan)
+
+```bash
+python nical.py analyze
+```
+
+#### 💡 `suggest` – Rekomendasi progresi akor (dalam pengembangan)
+
+```bash
+python nical.py suggest
+```
 
 ---
 
@@ -53,13 +76,18 @@ python nical.py chord -t D -i minor -n sharp
 python nical.py chord -t Bb -i mayor -n flat --verbose
 ```
 
+### 3. Menampilkan tangga nada **mayor** dari tuts **C#** dengan notasi mol (`b`):
+
+```bash
+python nical.py scale -t C# -i mayor -n flat
+```
+
 ---
 
 ### 🚧 Perintah Lain (Dalam Pengembangan)
 
 | Perintah  | Status         | Keterangan                                               |
 | --------- | -------------- | -------------------------------------------------------- |
-| `scale`   | 🔧 Akan datang | Tangga nada berdasarkan tuts dan jenis skala             |
 | `analyze` | 🔧 Akan datang | Analisis akor dari input                                 |
 | `suggest` | 🔧 Akan datang | Rekomendasi progresi akor yang cocok berdasarkan konteks |
 
@@ -70,6 +98,7 @@ python nical.py chord -t Bb -i mayor -n flat --verbose
 ## 💡 Catatan Tambahan
 
 * Input `tuts` hanya boleh terdiri dari huruf `A`–`G` disertai opsional `#` atau `b`.
+* Opsi `--notasi` menentukan hasil notasi output (`sharp` untuk `#`, `flat` untuk `b`).
 * Aplikasi cocok untuk eksplorasi harmoni dan belajar teori musik dasar.
 * Cocok digunakan untuk pelajar maupun musisi digital.
 
