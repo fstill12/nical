@@ -6,7 +6,7 @@ import sys
 import contextlib
 import io
 
-# nical.py - Aplikasi pembuat akor musik
+# MusikaCLI.py - Aplikasi pembuat akor musik
 
 # universal
 def convert_tuts_to_notasi(tuts: str, notasi: str) -> str:
@@ -111,9 +111,9 @@ def run_placeholder(command_name: str):
     return _inner
 
 def main():
-    """Fungsi utama untuk menjalankan aplikasi Nical."""
-    parser = argparse.ArgumentParser(prog="nical", 
-                                     description="🎵 Nical - Aplikasi pembuat akor musik",
+    """Fungsi utama untuk menjalankan aplikasi MusikaCLI."""
+    parser = argparse.ArgumentParser(prog="MusikaCLI", 
+                                     description="🎵 MusikaCLI - Aplikasi pembuat akor musik",
                                      formatter_class=argparse.RawTextHelpFormatter)
     subparsers = parser.add_subparsers(title="perintah", dest="command", required=True)
 
