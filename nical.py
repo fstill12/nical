@@ -50,16 +50,20 @@ def run_chord(args: argparse.Namespace):
 
     mode = mapping[args.interval]
     print()
-    print(f"Tangga nada {mode.simbol['title']}".title())
+    print(f"Tangga nada {kunci} {mode.simbol['title']}".title())
     print()
 
     for x, y in mode.simbol[args.interval].items():
         hasil = achord(note=n, tuts=kunci, q=y)
         if args.verbose:
+            print()
+            print(f"Tangga nada {kunci}")
+            print(f"Interval {x.replace('C', kunci).title()}")
+            print(f"Notasi {args.notasi.title()}")
             print(f"Akor {x.replace('C', kunci)} = {hasil}")
+            print()
         else:
             print(hasil)
-            print()
 
 def run_scale(args: argparse.Namespace):
     error = validate_tuts(args.tuts)
@@ -85,9 +89,10 @@ def run_scale(args: argparse.Namespace):
     if args.verbose:
         print()
         print(f"Tangga nada {kunci}")
-    print()
+        print(f"Interval {map.title()}")
+        print(f"Notasi {args.notasi.title()}")
+        print()
     print(f"{kunci} {map.title()} = {rtn}")
-    print()
 
 def run_placeholder(command_name: str):
     def _inner(_args):
