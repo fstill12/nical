@@ -8,6 +8,5 @@ def build_scale(root_name: Root, intervals: Interval, use: list[str]) -> list[st
     scale = [root_index]
     for interval in intervals:
         tuts = (scale[-1] + interval) % 12
-        if tuts != 0:
-            scale.append(tuts)
-    return [use[n] for n in scale]
+        scale.append(tuts)
+    return [use[n] for n in scale[:-1]]
