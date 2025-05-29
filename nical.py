@@ -125,18 +125,23 @@ def main():
     suggest_parser = subparsers.add_parser("suggest", help="(Dalam pengembangan) Rekomendasi progresi akor")
     suggest_parser.set_defaults(func=run_placeholder("suggest"))
 
-    nc = sys.argv
+    # help
+    set_args_parse = {
+        "chord -h --help": chord_parser, "scale -h --help": scale_parser, 
+          "analyze -h --help": analyze_parser, "suggest -h --help": suggest_parser
+        } # daftar perintah bantuan
+    nc = sys.argv # ambil argumen dari command line
     if len(nc) == 1:
         parser.print_help()
         sys.exit()
     else:
         # tangani bantuan khusus subcammand
-        if " ".join(nc[1:]) in "chord -h --help":
-            chord_parser.print_help()
-            sys.exit()
-        if " ".join(nc[1:]) in "scale -h --help":
-            scale_parser.print_help()
-            sys.exit()
+        for argp, comm in set_args_parse.items():
+            if " ".join(nc[1:]) in argp:
+                comm.print_help()
+                sys.exit()
+        parser.print_help()
+        sys.exit()
     args = parser.parse_args()
     args.func(args)
 
