@@ -140,9 +140,8 @@ def main():
             if " ".join(nc[1:]) in argp:
                 comm.print_help()
                 sys.exit()
-            else:
-                parser.print_help()
-                sys.exit()
+        parser.print_help()
+        sys.exit()
     args = parser.parse_args()
     args.func(args)
 
