@@ -117,8 +117,9 @@ def main():
     scale_parser = subparsers.add_parser("scale", help="(Dalam pengembangan) Buat tangga nada")
     scale_parser.add_argument("-t", "--tuts", help="Tuts dasar (misal: C, D#, Bb)")
     scale_parser.add_argument("-i", "--interval", 
-                              choices=["mayor", "minor", "minor_natural", 
-                                                      "minor_harmonik", "minor_melodik", "kromatik"], 
+                              choices=["mayor", "mayor_pentatonik", "minor",
+                                        "minor_harmonik", "minor_melodik", "minor_pentatonik",
+                                        "blues", "whole_tone", "kromatik"],
                               help="Jenis interval akor")
     scale_parser.add_argument("-n", "--notasi", choices=["sharp", "flat"], help="Jenis notasi (# atau b)")
     scale_parser.add_argument("-v", "--verbose", action="store_true", help="Tampilkan hasil lengkap")
