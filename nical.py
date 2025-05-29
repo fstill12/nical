@@ -23,9 +23,11 @@ def convert_tuts_to_notasi(tuts: str, notasi: str) -> str:
     return tuts
 
 def is_valid_str(tuts: str) -> bool:
+    """Cek apakah input tuts valid."""
     return bool(re.fullmatch(r"[A-Ga-g][#b]?", tuts))
 
 def validate_tuts(tuts: str) -> str | None:
+    """Validasi input tuts."""
     if tuts is None:
         return "Kesalahan: perintah --tuts belum diberikan."
     if not is_valid_str(tuts):
@@ -33,6 +35,7 @@ def validate_tuts(tuts: str) -> str | None:
     return None
 
 def run_chord(args: argparse.Namespace):
+    """Fungsi untuk menangani perintah 'chord'."""
     error = validate_tuts(args.tuts)
     if error:
         print(error)
@@ -40,7 +43,7 @@ def run_chord(args: argparse.Namespace):
 
     kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
     n = Note.sharp if args.notasi == "sharp" else Note.flat
-
+    # validasi interval
     mapping = {
         "mayor": mayor,
         "minor": minor,
@@ -52,7 +55,7 @@ def run_chord(args: argparse.Namespace):
     print()
     print(f"Tangga nada {kunci} {mode.simbol['title']}".title())
     print()
-
+    # tampilkan hasil
     for x, y in mode.simbol[args.interval].items():
         hasil = achord(note=n, tuts=kunci, q=y)
         if args.verbose:
@@ -66,6 +69,7 @@ def run_chord(args: argparse.Namespace):
             print(hasil)
 
 def run_scale(args: argparse.Namespace):
+    """Fungsi untuk menangani perintah 'scale'."""
     error = validate_tuts(args.tuts)
     if error:
         print(error)
@@ -85,21 +89,29 @@ def run_scale(args: argparse.Namespace):
     map = mapping[args.interval]
     interval = Note.tangga_nada["tangga_nada"][map]
     rtn = rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval, use=n)
-    # permasalahan baru = scale -t c# -i mayor -n flat
+    # tampilkan hasil
     if args.verbose:
         print()
         print(f"Tangga nada {kunci}")
         print(f"Interval {map.title()}")
         print(f"Notasi {args.notasi.title()}")
-        print()
-    print(f"{kunci} {map.title()} = {rtn}")
+        print(f"\nSkala  {kunci} {map.title()}:\n{' - '.join(rtn)}")
+        if args.interval != "kromatik":
+            print("\nNilai setiap nada dalam skala:")
+            for i, note in enumerate(rtn):
+                print(f"{i+1}. {note} ({Note.derajat[i+1]})")
+    else:
+        print(f"\nSkala  {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
+        print(f"{kunci} {map.title()} = {rtn}\n")
 
 def run_placeholder(command_name: str):
+    """Fungsi placeholder untuk perintah yang masih dalam pengembangan."""
     def _inner(_args):
         print(f"🔧 Fitur '{command_name}' masih dalam pengembangan. Nantikan update berikutnya!")
     return _inner
 
 def main():
+    """Fungsi utama untuk menjalankan aplikasi Nical."""
     parser = argparse.ArgumentParser(prog="nical", 
                                      description="🎵 Nical - Aplikasi pembuat akor musik",
                                      formatter_class=argparse.RawTextHelpFormatter)
