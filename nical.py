@@ -3,6 +3,8 @@ from teori import achord, Note
 from teori.interval import mayor, minor, diminished, augmented, rumus_tangga_nada
 import re
 import sys
+import contextlib
+import io
 
 # nical.py - Aplikasi pembuat akor musik
 
@@ -140,8 +142,6 @@ def main():
             if " ".join(nc[1:]) in argp:
                 comm.print_help()
                 sys.exit()
-        parser.print_help()
-        sys.exit()
     args = parser.parse_args()
     args.func(args)
 
