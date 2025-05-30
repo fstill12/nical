@@ -1,10 +1,9 @@
 import argparse
-from teori import achord, Note
-from teori.interval import mayor, minor, diminished, augmented, rumus_tangga_nada
+from teori import achord, rumus_tangga_nada
+from teori.interval import mayor, minor, diminished, augmented
+from teori.interval.note import Note
 import re
 import sys
-import contextlib
-import io
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
