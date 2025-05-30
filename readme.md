@@ -1,6 +1,6 @@
-# 🎹 Nical - Aplikasi CLI Pembuat Akor Musik
+# 🎹 MusikaCLI - Aplikasi CLI Pembuat Akor Musik
 
-**Nical** adalah aplikasi antarmuka baris perintah (CLI) untuk membantu kamu membuat akor dan tangga nada musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, pelajar teori musik, maupun developer musik digital.
+**MusikaCLI** adalah aplikasi antarmuka baris perintah (CLI) untuk membantu kamu membuat akor dan tangga nada musik berdasarkan tuts dasar, jenis interval, dan notasi (#/b). Cocok untuk musisi, pelajar teori musik, maupun developer musik digital.
 
 ---
 
@@ -17,7 +17,7 @@ pip install teori
 ## 🚀 Cara Penggunaan
 
 ```bash
-python nical.py <perintah> [opsi...]
+python musikacli.py <perintah> [opsi...]
 ```
 
 ### ✅ Perintah Utama yang Tersedia
@@ -25,7 +25,7 @@ python nical.py <perintah> [opsi...]
 #### 🎼 `chord` – Buat akor berdasarkan tuts
 
 ```bash
-python nical.py chord -t TUTS -i INTERVAL -n NOTASI [--verbose]
+python musikacli.py chord -t TUTS -i INTERVAL -n NOTASI [--verbose]
 ```
 
 | Argumen      | Alias | Wajib    | Keterangan                                                       |
@@ -38,7 +38,7 @@ python nical.py chord -t TUTS -i INTERVAL -n NOTASI [--verbose]
 #### 🎵 `scale` – Buat tangga nada
 
 ```bash
-python nical.py scale -t TUTS -i INTERVAL -n NOTASI [--verbose]
+python musikacli.py scale -t TUTS -i INTERVAL -n NOTASI [--verbose]
 ```
 
 | Argumen      | Alias | Wajib    | Keterangan                                                                                  |
@@ -51,13 +51,13 @@ python nical.py scale -t TUTS -i INTERVAL -n NOTASI [--verbose]
 #### 🔍 `analyze` – Analisa akor (dalam pengembangan)
 
 ```bash
-python nical.py analyze
+python musikacli.py analyze
 ```
 
 #### 💡 `suggest` – Rekomendasi progresi akor (dalam pengembangan)
 
 ```bash
-python nical.py suggest
+python musikacli.py suggest
 ```
 
 ---
@@ -67,19 +67,19 @@ python nical.py suggest
 ### 1. Menampilkan akor **minor** dari tuts **D** dengan notasi kres (`#`):
 
 ```bash
-python nical.py chord -t D -i minor -n sharp
+python musikacli.py chord -t D -i minor -n sharp
 ```
 
 ### 2. Menampilkan akor **mayor** dari tuts **Bb** dengan notasi mol (`b`) dan hasil lengkap:
 
 ```bash
-python nical.py chord -t Bb -i mayor -n flat --verbose
+python musikacli.py chord -t Bb -i mayor -n flat --verbose
 ```
 
 ### 3. Menampilkan tangga nada **mayor** dari tuts **C#** dengan notasi mol (`b`):
 
 ```bash
-python nical.py scale -t C# -i mayor -n flat
+python musikacli.py scale -t C# -i mayor -n flat
 ```
 
 ---
