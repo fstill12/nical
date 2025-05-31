@@ -32,7 +32,9 @@ rumus = {
 # simbol tangga nada mayor dan minor
 simbol_tangga_nada = {
     "mayor": "M",
-    "minor": "m"
+    "minor": "m",
+    "diminished": "dim",
+    "augmented": "aug"
 }
 
 # Definisi derajat tangga nada
