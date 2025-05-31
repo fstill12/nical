@@ -1,7 +1,11 @@
 from collections import namedtuple
 
 # Namedtuple untuk konfigurasi warna
-Config = namedtuple("Config", ["flat", "sharp", "tangga_nada", "derajat"])
+Config = namedtuple("Config", 
+                    [
+                        "flat", "sharp", "tangga_nada", "derajat",
+                        "stn"
+                        ])
 
 # Konstanta flat
 flat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
@@ -23,6 +27,12 @@ rumus = {
         "kromatik": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         "whole_tone": [2, 2, 2, 2, 2, 2],
     } 
+}
+
+# simbol tangga nada mayor dan minor
+simbol_tangga_nada = {
+    "mayor": "M",
+    "minor": "m"
 }
 
 # Definisi derajat tangga nada
@@ -165,4 +175,4 @@ DEFAULT_QUALITIES = [
 ]
 
 # Definisi warna
-Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat)
+Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat, stn=simbol_tangga_nada)
