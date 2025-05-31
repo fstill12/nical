@@ -1,5 +1,67 @@
-# Do not import DEFAULT_QUALITIES directly
-# Use QualityManager instead
+from collections import namedtuple
+
+# Namedtuple untuk konfigurasi warna
+Config = namedtuple("Config", 
+                    [
+                        "flat", "sharp", "tangga_nada", "derajat",
+                        "stn"
+                        ])
+
+# Konstanta flat
+flat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
+
+# Konstanta flat
+sharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+# Rumus tangga nada
+rumus = {
+    "judul": "rumus_interval_tangga_nada",
+    "tangga_nada":{
+        "mayor": [2, 2, 1, 2, 2, 2, 1],
+        "mayor_pentatonik": [2, 2, 3, 2, 3],
+        "minor": [2, 1, 2, 2, 1, 2, 2],
+        "minor_harmonik": [2, 1, 2, 2, 1, 3, 1],
+        "minor_melodik": [2, 1, 2, 2, 2, 2, 1],
+        "minor_pentatonik": [3, 2, 2, 3, 2],
+        "blues": [3, 2, 1, 1, 3, 2],
+        "kromatik": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "whole_tone": [2, 2, 2, 2, 2, 2],
+    } 
+}
+
+# simbol tangga nada mayor dan minor
+simbol_tangga_nada = {
+    "mayor": "M",
+    "minor": "m",
+    "diminished": "dim",
+    "augmented": "aug"
+}
+
+# Definisi derajat tangga nada
+derajat = {
+    1: "1 (tonik)",
+    2: "2 (supertonik)",
+    3: "3 (mediant)",
+    4: "4 (subdominant)",
+    5: "5 (dominant)",
+    6: "6 (submediant)",
+    7: "7 (leading tone/subtonik)",
+}
+
+# diambil dari kode usmber pychord
+# https://en.wikipedia.org/wiki/Mode_(music)#Modern_modes
+# Ionian -> maj, Aeolian -> min
+RELATIVE_KEY_DICT = {
+    'maj': [0, 2, 4, 5, 7, 9, 11, 12],
+    'Dor': [0, 2, 3, 5, 7, 9, 10, 12],
+    'Phr': [0, 1, 3, 5, 7, 8, 10, 12],
+    'Lyd': [0, 2, 4, 6, 7, 9, 11, 12],
+    'Mix': [0, 2, 4, 5, 7, 9, 10, 12],
+    'min': [0, 2, 3, 5, 7, 8, 10, 12],
+    'Loc': [0, 1, 3, 5, 6, 8, 10, 12],
+}
+
+# diambil dari kode usmber pychord
 DEFAULT_QUALITIES = [
     # chords consist of 2 notes
     ('5', (0, 7)),
@@ -113,3 +175,6 @@ DEFAULT_QUALITIES = [
     ('maj7add13', (0, 4, 7, 9, 11, 14)),
     ('M7add13', (0, 4, 7, 9, 11, 14)),
 ]
+
+# Definisi warna
+Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat, stn=simbol_tangga_nada)

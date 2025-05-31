@@ -1,10 +1,9 @@
 import argparse
-from teori import achord, Note
-from teori.interval import mayor, minor, diminished, augmented, rumus_tangga_nada
+from teori import achord, rumus_tangga_nada
+from teori.interval import mayor, minor, diminished, augmented
+from teori.interval.note import Note
 import re
 import sys
-import contextlib
-import io
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
@@ -53,17 +52,18 @@ def run_chord(args: argparse.Namespace):
 
     mode = mapping[args.interval]
     print()
-    print(f"Tangga nada {kunci} {mode.simbol['title']}".title())
+    print(f"Tangga nada {kunci} {mode.simbol['title']}")
+    print(f"Simbol : {kunci}{Note.stn[mode.simbol['title']]}")
     print()
     # tampilkan hasil
     for x, y in mode.simbol[args.interval].items():
         hasil = achord(note=n, tuts=kunci, q=y)
         if args.verbose:
             print()
-            print(f"Tangga nada {kunci}")
-            print(f"Interval {x.replace('C', kunci).title()}")
-            print(f"Notasi {args.notasi.title()}")
-            print(f"Akor {x.replace('C', kunci)} = {hasil}")
+            print(f"Tangga nada : {kunci}")
+            print(f"Interval : {x.replace('C', kunci).title()}")
+            print(f"Notasi : {args.notasi.title()}")
+            print(f"Akor : {x.replace('C', kunci)} = {hasil}")
             print()
         else:
             print(hasil)
@@ -92,16 +92,18 @@ def run_scale(args: argparse.Namespace):
     # tampilkan hasil
     if args.verbose:
         print()
-        print(f"Tangga nada {kunci}")
-        print(f"Interval {map.title()}")
-        print(f"Notasi {args.notasi.title()}")
-        print(f"\nSkala  {kunci} {map.title()}:\n{' - '.join(rtn)}")
+        print(f"Tangga nada : {kunci}")
+        print(f"Simbol : {kunci}{Note.stn[map]}")
+        print(f"Interval : {map}")
+        print(f"Notasi : {args.notasi}")
+        print(f"\nSkala : {kunci} {map}:\n{' - '.join(rtn)}")
         if args.interval != "kromatik":
             print("\nNilai setiap nada dalam skala:")
             for i, note in enumerate(rtn):
                 print(f"{i+1}. {note} ({Note.derajat[i+1]})")
     else:
-        print(f"\nSkala  {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
+        print(f"Simbol : {kunci}{Note.stn[map]}")
+        print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
         print(f"{kunci} {map.title()} = {rtn}\n")
 
 def run_placeholder(command_name: str):
