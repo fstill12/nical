@@ -18,23 +18,31 @@ sharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 # Degree dan kualitas akor pada tangga nada mayor
 skala_diatonik_mayor = {
-    'I': 'major',
-    'ii': 'minor',
-    'iii': 'minor',
-    'IV': 'major',
-    'V': 'major',
-    'vi': 'minor',
-    'vii°': 'diminished'}
+    "judul": "mayor",
+    "tangga_nada": {
+        'I': 'major',
+        'ii': 'minor',
+        'iii': 'minor',
+        'IV': 'major',
+        'V': 'major',
+        'vi': 'minor',
+        'vii°': 'diminished'}
+    }
+    
 
 # Degree dan kualitas akor pada tangga nada minor alami
 skala_diatonik_minor = {
-    'i': 'minor',
-    'ii°': 'diminished',
-    'III': 'major',
-    'iv': 'minor',
-    'v': 'minor',
-    'VI': 'major',
-    'VII': 'major'}
+    "judul": "minor",
+    "tangga_nada": {
+        'i': 'minor',
+        'ii°': 'diminished',
+        'III': 'major',
+        'iv': 'minor',
+        'v': 'minor',
+        'VI': 'major',
+        'VII': 'major'} 
+    }
+    
 
 # Rumus tangga nada
 rumus = {
