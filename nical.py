@@ -100,25 +100,43 @@ def run_scale(args: argparse.Namespace):
             print("\nNilai setiap nada dalam skala:")
             for i, note in enumerate(rtn):
                 print(f"{i+1}. {note} ({Note.derajat[i+1]})")
-    else:
-        print(f"Simbol : {kunci}{Note.stn[map]}")
-        print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
-        print(f"{kunci} {map.title()} = {rtn}\n")
-        # menampilkan dalam bentuk table
         if map == "mayor":
-            print(f"tangga nada diatonik : {kunci}{Note.stn[map]}")
+            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
             tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
             tvmayor = list(Diatonik.mayor["tangga_nada"].values())
             tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
             for k, v in zip(tkmayor, tgmayor):
                 print(f"{k} : {v}")
+            print()
         if map == "minor":
-            print(f"tangga nada diatonik : {kunci}{Note.stn[map]}")
+            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
             tkminor = list(Diatonik.minor["tangga_nada"].keys())
             tvminor = list(Diatonik.minor["tangga_nada"].values())
             tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvminor)]
             for k, v in zip(tkminor, tgminor):
                 print(f"{k} : {v}")
+            print()
+    else:
+        print(f"Simbol : {kunci}{Note.stn[map]}")
+        print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
+        print(f"{kunci} {map.title()} = {rtn}\n")
+        # menampilkan tangga nada diatonik
+        if map == "mayor":
+            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
+            tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
+            tvmayor = list(Diatonik.mayor["tangga_nada"].values())
+            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
+            for k, v in zip(tkmayor, tgmayor):
+                print(f"{k} : {v}")
+            print()
+        if map == "minor":
+            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
+            tkminor = list(Diatonik.minor["tangga_nada"].keys())
+            tvminor = list(Diatonik.minor["tangga_nada"].values())
+            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvminor)]
+            for k, v in zip(tkminor, tgminor):
+                print(f"{k} : {v}")
+            print()
 
 def run_placeholder(command_name: str):
     """Fungsi placeholder untuk perintah yang masih dalam pengembangan."""
