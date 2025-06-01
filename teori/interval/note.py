@@ -1,12 +1,14 @@
 from collections import namedtuple
-from pprint import pprint
 
-# Namedtuple untuk konfigurasi warna
+# Namedtuple untuk konfigurasi config
 Config = namedtuple("Config", 
                     [
                         "flat", "sharp", "tangga_nada", "derajat",
                         "stn"
                         ])
+
+# Namedtuple untuk konfigurasi config
+Skala = namedtuple("Skala", ["mayor", "minor"])
 
 # Konstanta flat
 flat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
@@ -199,3 +201,4 @@ DEFAULT_QUALITIES = [
 
 # Definisi warna
 Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat, stn=simbol_tangga_nada)
+Diatonik = Skala(mayor=skala_diatonik_mayor, minor=skala_diatonik_minor)
