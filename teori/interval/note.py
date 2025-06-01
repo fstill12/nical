@@ -1,4 +1,5 @@
 from collections import namedtuple
+from pprint import pprint
 
 # Namedtuple untuk konfigurasi warna
 Config = namedtuple("Config", 
@@ -12,6 +13,26 @@ flat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
 # Konstanta flat
 sharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+# Degree dan kualitas akor pada tangga nada mayor
+skala_diatonik_mayor = {
+    'I': 'major',
+    'ii': 'minor',
+    'iii': 'minor',
+    'IV': 'major',
+    'V': 'major',
+    'vi': 'minor',
+    'vii°': 'diminished'}
+
+# Degree dan kualitas akor pada tangga nada minor alami
+skala_diatonik_minor = {
+    'i': 'minor',
+    'ii°': 'diminished',
+    'III': 'major',
+    'iv': 'minor',
+    'v': 'minor',
+    'VI': 'major',
+    'VII': 'major'}
 
 # Rumus tangga nada
 rumus = {
