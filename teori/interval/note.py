@@ -54,7 +54,7 @@ rumus = {
 
 # simbol tangga nada mayor dan minor
 simbol_tangga_nada = {
-    "mayor": "M",
+    "mayor": "",
     "minor": "m",
     "diminished": "dim",
     "augmented": "aug"
