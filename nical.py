@@ -1,7 +1,8 @@
+from tabulate import tabulate
 import argparse
 from teori import achord, rumus_tangga_nada
 from teori.interval import mayor, minor, diminished, augmented
-from teori.interval.note import Note
+from teori.interval.note import Note, Diatonik
 import re
 import sys
 
@@ -74,10 +75,8 @@ def run_scale(args: argparse.Namespace):
     if error:
         print(error)
         return
-    
     kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
     n = Note.sharp if args.notasi == "sharp" else Note.flat
-
     mapping = {
         "mayor": "mayor",
         "minor": "minor",
@@ -105,6 +104,14 @@ def run_scale(args: argparse.Namespace):
         print(f"Simbol : {kunci}{Note.stn[map]}")
         print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
         print(f"{kunci} {map.title()} = {rtn}\n")
+        # menampilkan dalam bentuk table
+        if map == "mayor":
+            print(f"tangga nada diatonik : {kunci}{Note.stn[map]}")
+            tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
+            tvmayor = list(Diatonik.mayor["tangga_nada"].values())
+            tgmayor = [f"{rtn[t]}{Note.stn[map]}" for t, s in enumerate(tvmayor)]
+            for k, v in zip(tkmayor, tgmayor):
+                print(f"{k} : {v}")
 
 def run_placeholder(command_name: str):
     """Fungsi placeholder untuk perintah yang masih dalam pengembangan."""
