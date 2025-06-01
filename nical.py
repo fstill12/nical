@@ -109,7 +109,7 @@ def run_scale(args: argparse.Namespace):
             print(f"tangga nada diatonik : {kunci}{Note.stn[map]}")
             tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
             tvmayor = list(Diatonik.mayor["tangga_nada"].values())
-            tgmayor = [f"{rtn[t]}{Note.stn[map]}" for t, s in enumerate(tvmayor)]
+            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
             for k, v in zip(tkmayor, tgmayor):
                 print(f"{k} : {v}")
 
