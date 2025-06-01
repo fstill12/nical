@@ -63,6 +63,7 @@ rumus = {
 # simbol tangga nada mayor dan minor
 simbol_tangga_nada = {
     "mayor": "",
+    "major": "",
     "minor": "m",
     "diminished": "dim",
     "augmented": "aug"
