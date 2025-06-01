@@ -1,17 +1,48 @@
 from collections import namedtuple
 
-# Namedtuple untuk konfigurasi warna
+# Namedtuple untuk konfigurasi config
 Config = namedtuple("Config", 
                     [
                         "flat", "sharp", "tangga_nada", "derajat",
                         "stn"
                         ])
 
+# Namedtuple untuk konfigurasi config
+Skala = namedtuple("Skala", ["mayor", "minor"])
+
 # Konstanta flat
 flat = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
 # Konstanta flat
 sharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+# Degree dan kualitas akor pada tangga nada mayor
+skala_diatonik_mayor = {
+    "judul": "mayor",
+    "tangga_nada": {
+        'I': 'major',
+        'ii': 'minor',
+        'iii': 'minor',
+        'IV': 'major',
+        'V': 'major',
+        'vi': 'minor',
+        'vii°': 'diminished'}
+    }
+    
+
+# Degree dan kualitas akor pada tangga nada minor alami
+skala_diatonik_minor = {
+    "judul": "minor",
+    "tangga_nada": {
+        'i': 'minor',
+        'ii°': 'diminished',
+        'III': 'major',
+        'iv': 'minor',
+        'v': 'minor',
+        'VI': 'major',
+        'VII': 'major'} 
+    }
+    
 
 # Rumus tangga nada
 rumus = {
@@ -31,7 +62,8 @@ rumus = {
 
 # simbol tangga nada mayor dan minor
 simbol_tangga_nada = {
-    "mayor": "M",
+    "mayor": "",
+    "major": "",
     "minor": "m",
     "diminished": "dim",
     "augmented": "aug"
@@ -178,3 +210,4 @@ DEFAULT_QUALITIES = [
 
 # Definisi warna
 Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat, stn=simbol_tangga_nada)
+Diatonik = Skala(mayor=skala_diatonik_mayor, minor=skala_diatonik_minor)
