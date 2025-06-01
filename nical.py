@@ -112,6 +112,13 @@ def run_scale(args: argparse.Namespace):
             tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
             for k, v in zip(tkmayor, tgmayor):
                 print(f"{k} : {v}")
+        if map == "minor":
+            print(f"tangga nada diatonik : {kunci}{Note.stn[map]}")
+            tkminor = list(Diatonik.minor["tangga_nada"].keys())
+            tvminor = list(Diatonik.minor["tangga_nada"].values())
+            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvminor)]
+            for k, v in zip(tkminor, tgminor):
+                print(f"{k} : {v}")
 
 def run_placeholder(command_name: str):
     """Fungsi placeholder untuk perintah yang masih dalam pengembangan."""
