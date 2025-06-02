@@ -79,10 +79,13 @@ def run_scale(args: argparse.Namespace):
     n = Note.sharp if args.notasi == "sharp" else Note.flat
     mapping = {
         "mayor": "mayor",
+        "mayor_pentatonik": "mayor_pentatonik",
         "minor": "minor",
-        "minor_natural": "minor",
         "minor_harmonik": "minor_harmonik",
         "minor_melodik": "minor_melodik",
+        "minor_pentatonik": "minor_pentatonik",
+        "blues": "blues",
+        "whole_tone": "whole_tone",
         "kromatik": "kromatik"
     }
     map = mapping[args.interval]
@@ -92,14 +95,15 @@ def run_scale(args: argparse.Namespace):
     if args.verbose:
         print()
         print(f"Tangga nada : {kunci}")
-        print(f"Simbol : {kunci}{Note.stn[map]}")
+        print(f"Simbol : {kunci}{Note.stn.get(map, '')}")
         print(f"Interval : {map}")
         print(f"Notasi : {args.notasi}")
         print(f"\nSkala : {kunci} {map}:\n{' - '.join(rtn)}")
-        if args.interval != "kromatik":
-            print("\nNilai setiap nada dalam skala:")
-            for i, note in enumerate(rtn):
-                print(f"{i+1}. {note} ({Note.derajat[i+1]})")
+        print("\nNilai setiap nada dalam skala:")
+        for i, note in enumerate(rtn):
+            der = Note.derajat.get(i+1, f"{i+1}")
+            print(f"{i+1}. {note} ({der})")
+        # Diatonik hanya untuk mayor/minor
         if map == "mayor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
             tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
@@ -117,10 +121,14 @@ def run_scale(args: argparse.Namespace):
                 print(f"{k} : {v}")
             print()
     else:
-        print(f"Simbol : {kunci}{Note.stn[map]}")
+        print(f"Simbol : {kunci}{Note.stn.get(map, '')}")
         print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
         print(f"{kunci} {map.title()} = {rtn}\n")
-        # menampilkan tangga nada diatonik
+        print("Nilai setiap nada dalam skala:")
+        for i, note in enumerate(rtn):
+            der = Note.derajat.get(i+1, f"{i+1}")
+            print(f"{i+1}. {note} ({der})")
+        # Diatonik hanya untuk mayor/minor
         if map == "mayor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
             tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
