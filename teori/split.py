@@ -4,10 +4,8 @@ class SplitDict:
     def __init__(self, interval: Intervals):
         self.interval = interval
 
-    @property
-    def keys(self):
+    def kunci(self):
         return list(self.interval.keys())
     
-    @property
-    def values(self):
+    def nilai(self):
         return list(self.interval.values())
