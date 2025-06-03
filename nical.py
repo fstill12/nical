@@ -74,10 +74,14 @@ def run_scale(args: argparse.Namespace):
     if error:
         print(error)
         return
+    # ambil kunci dan nilai menjadi data
     tmayor = SplitDict(Diatonik.mayor["tangga_nada"])
     tminor = SplitDict(Diatonik.minor["tangga_nada"])
+    # ambil kunci dari argumen tuts
     kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
+    # ambil tangga nada kromatik sharp atau flat 
     n = Note.sharp if args.notasi == "sharp" else Note.flat
+    # map argumen pilihan untuk --interval atau -i
     mapping = {
         "mayor": "mayor",
         "mayor_pentatonik": "mayor_pentatonik",
