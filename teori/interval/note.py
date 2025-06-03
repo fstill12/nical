@@ -4,8 +4,7 @@ from collections import namedtuple
 Config = namedtuple("Config", 
                     [
                         "flat", "sharp", "tangga_nada", "derajat",
-                        "stn"
-                        ])
+                        "stn", "quality"])
 
 # Namedtuple untuk konfigurasi config
 Skala = namedtuple("Skala", ["mayor", "minor"])
@@ -80,6 +79,7 @@ derajat = {
     7: "7 (leading tone/subtonik)",
 }
 
+# Definisi kunci relatif untuk mode
 # diambil dari kode usmber pychord
 # https://en.wikipedia.org/wiki/Mode_(music)#Modern_modes
 # Ionian -> maj, Aeolian -> min
@@ -93,6 +93,7 @@ RELATIVE_KEY_DICT = {
     'Loc': [0, 1, 3, 5, 6, 8, 10, 12],
 }
 
+# Kualitas akor yang umum digunakan
 # diambil dari kode usmber pychord
 DEFAULT_QUALITIES = [
     # chords consist of 2 notes
@@ -208,6 +209,8 @@ DEFAULT_QUALITIES = [
     ('M7add13', (0, 4, 7, 9, 11, 14)),
 ]
 
-# Definisi warna
-Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, derajat=derajat, stn=simbol_tangga_nada)
+# Definisi konfigurasi untuk tangga nada
+Note = Config(flat=flat, sharp=sharp, tangga_nada=rumus, 
+              derajat=derajat, stn=simbol_tangga_nada, quality=DEFAULT_QUALITIES)
+# Definisi skala diatonik mayor dan minor
 Diatonik = Skala(mayor=skala_diatonik_mayor, minor=skala_diatonik_minor)

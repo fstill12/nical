@@ -24,23 +24,27 @@ def run_chord(args: argparse.Namespace):
     }
 
     mode = mapping[args.interval]
+    # ambil simbol dari interval
+    vsimbol = SplitDict(mode.simbol[args.interval])
+    # validasi simbol
+    chords = {f"{kunci}{v[0]}": v[1] for v in Note.quality if v[1] in vsimbol.nilai()}
     print()
     print(f"Tangga nada {kunci} {mode.simbol['title']}")
     print(f"Simbol : {kunci}{Note.stn[mode.simbol['title']]}")
     print()
     # tampilkan hasil
-    for x, y in mode.simbol[args.interval].items():
+    for x, y in chords.items():
         hasil = achord(note=n, tuts=kunci, q=y)
         if args.verbose:
             print()
             print(f"Tangga nada : {kunci}")
             print(f"Interval : {x.replace('C', kunci).title()}")
             print(f"Notasi : {args.notasi.title()}")
-            print(f"Akor : {x.replace('C', kunci)} = {hasil}")
-            print()
+            print(f"Akor : {x} = {hasil}")
         else:
-            print(hasil)
-
+            print(f"Akor : {x} = {hasil}")
+    print()
+    
 def run_scale(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'scale'."""
     error = validate_tuts(args.tuts)
