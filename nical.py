@@ -1,6 +1,5 @@
-from tabulate import tabulate
 import argparse
-from teori import achord, rumus_tangga_nada
+from teori import achord, rumus_tangga_nada, SplitDict
 from teori.interval import mayor, minor, diminished, augmented
 from teori.interval.note import Note, Diatonik
 import re
@@ -75,6 +74,8 @@ def run_scale(args: argparse.Namespace):
     if error:
         print(error)
         return
+    tmayor = SplitDict(Diatonik.mayor["tangga_nada"])
+    tminor = SplitDict(Diatonik.minor["tangga_nada"])
     kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
     n = Note.sharp if args.notasi == "sharp" else Note.flat
     mapping = {
@@ -106,18 +107,14 @@ def run_scale(args: argparse.Namespace):
         # Diatonik hanya untuk mayor/minor
         if map == "mayor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
-            tvmayor = list(Diatonik.mayor["tangga_nada"].values())
-            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
-            for k, v in zip(tkmayor, tgmayor):
+            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
+            for k, v in zip(tmayor.kunci(), tgmayor):
                 print(f"{k} : {v}")
             print()
         if map == "minor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tkminor = list(Diatonik.minor["tangga_nada"].keys())
-            tvminor = list(Diatonik.minor["tangga_nada"].values())
-            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvminor)]
-            for k, v in zip(tkminor, tgminor):
+            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
+            for k, v in zip(tminor.kunci(), tgminor):
                 print(f"{k} : {v}")
             print()
     else:
@@ -131,18 +128,14 @@ def run_scale(args: argparse.Namespace):
         # Diatonik hanya untuk mayor/minor
         if map == "mayor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tkmayor = list(Diatonik.mayor["tangga_nada"].keys())
-            tvmayor = list(Diatonik.mayor["tangga_nada"].values())
-            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvmayor)]
-            for k, v in zip(tkmayor, tgmayor):
+            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
+            for k, v in zip(tmayor.kunci(), tgmayor):
                 print(f"{k} : {v}")
             print()
         if map == "minor":
             print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tkminor = list(Diatonik.minor["tangga_nada"].keys())
-            tvminor = list(Diatonik.minor["tangga_nada"].values())
-            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tvminor)]
-            for k, v in zip(tkminor, tgminor):
+            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
+            for k, v in zip(tminor.kunci(), tgminor):
                 print(f"{k} : {v}")
             print()
 
