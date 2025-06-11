@@ -6,6 +6,7 @@ import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
+# run_chord - Fungsi untuk menangani perintah 'chord'
 def run_chord(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'chord'."""
     error = validate_tuts(args.tuts)
@@ -44,7 +45,8 @@ def run_chord(args: argparse.Namespace):
         else:
             print(f"Akor : {x} = {hasil}")
     print()
-    
+
+# run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'scale'."""
     error = validate_tuts(args.tuts)
@@ -120,6 +122,35 @@ def run_scale(args: argparse.Namespace):
                 print(f"{k} : {v}")
             print()
 
+# run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
+def run_analyze(args: argparse.Namespace):
+    """Fungsi untuk menganalisis tuts/nada dan menebak jenis akor."""
+    tuts_list = args.tuts.split()
+    for t in tuts_list:
+        error = validate_tuts(t)
+        if error:
+            print(error)
+            return
+
+    kunci = convert_tuts_to_notasi(tuts_list[0], args.notasi)
+    n = Note.sharp if args.notasi == "sharp" else Note.flat
+
+    # Cek kecocokan dengan kualitas akor yang ada
+    cocok = []
+    for nama, interval in Note.quality:
+        hasil = achord(note=n, tuts=kunci, q=interval)
+        if set(hasil) == set(tuts_list):
+            cocok.append(nama)
+
+    print(f"\nAnalisis untuk tuts: {args.tuts}")
+    if cocok:
+        print("Kemungkinan akor:")
+        for nama in cocok:
+            print(f"- {kunci}{nama}")
+    else:
+        print("Tidak ditemukan akor yang cocok.")
+
+# run_placeholder - Fungsi placeholder untuk perintah yang masih dalam pengembangan
 def run_placeholder(command_name: str):
     """Fungsi placeholder untuk perintah yang masih dalam pengembangan."""
     def _inner(_args):
@@ -154,8 +185,10 @@ def main():
     scale_parser.set_defaults(func=run_scale)
 
     # analyze
-    analyze_parser = subparsers.add_parser("analyze", help="(Dalam pengembangan) Analisa akor")
-    analyze_parser.set_defaults(func=run_placeholder("analyze"))
+    analyze_parser = subparsers.add_parser("analyze", help="Analisa akor dari tuts")
+    analyze_parser.add_argument("-t", "--tuts", required=True, help="Tuts/nada yang akan dianalisis (misal: C E G)")
+    analyze_parser.add_argument("-n", "--notasi", choices=["sharp", "flat"], default="sharp", help="Jenis notasi (# atau b)")
+    analyze_parser.set_defaults(func=run_analyze)
 
     # suggest
     suggest_parser = subparsers.add_parser("suggest", help="(Dalam pengembangan) Rekomendasi progresi akor")
