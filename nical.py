@@ -1,5 +1,5 @@
 import argparse
-from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi
+from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi, is_valid_akor
 from teori.interval import mayor, minor, diminished, augmented
 from teori.interval.note import Note, Diatonik
 import sys
@@ -125,7 +125,7 @@ def run_scale(args: argparse.Namespace):
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
     """Fungsi untuk menganalisis tuts/nada dan menebak jenis akor."""
-    tuts_list = args.tuts.split()
+    tuts_list = is_valid_akor(args.tuts)
     for t in tuts_list:
         error = validate_tuts(t)
         if error:
