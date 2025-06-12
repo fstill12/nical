@@ -18,6 +18,10 @@ def is_valid_str(tuts: str) -> bool:
     """Cek apakah input tuts valid."""
     return bool(re.fullmatch(r"[A-Ga-g][#b]?", tuts))
 
+def is_valid_akor(tuts: str) -> bool:
+    """Cek apakah input adalah akor."""
+    return re.fullmatch(r"\b[A-Ga-g][#b]?\b", tuts)
+
 def validate_tuts(tuts: str) -> str | None:
     """Validasi input tuts."""
     if tuts is None:
