@@ -28,6 +28,4 @@ def validate_tuts(tuts: str) -> str | None:
         return "Kesalahan: perintah --tuts belum diberikan."
     if not is_valid_str(tuts):
         return "Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'."
-    if is_valid_akor(tuts):
-        return "Kesalahan : Input akor hanya boleh berdasarkan teori musik"
     return None
