@@ -173,7 +173,7 @@ def main():
     chord_parser.set_defaults(func=run_chord)
 
     # scale
-    scale_parser = subparsers.add_parser("scale", help="(Dalam pengembangan) Buat tangga nada")
+    scale_parser = subparsers.add_parser("scale", help="Buat tangga nada")
     scale_parser.add_argument("-t", "--tuts", help="Tuts dasar (misal: C, D#, Bb)")
     scale_parser.add_argument("-i", "--interval", 
                               choices=["mayor", "mayor_pentatonik", "minor",
