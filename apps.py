@@ -5,23 +5,22 @@ import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
-# run_chord - Fungsi untuk menangani perintah 'chord'
 class RunChord:
-    def __init__(self, args: argparse.Namespace):
+    def __init__(self, args: dict[str, str]):
         self.args = args
 
     def validate_string(self):
-        """Fungsi untuk menangani perintah 'chord'."""
+        """Fungsi untuk validasi string"""
         error = validate_tuts(self.args.tuts)
         if error:
             print(error)
             return
         
-    def coversi_notasi_tuts(self) -> str:
+    def coversi_notasi_tuts(self, kunci: str, notasi: str) -> str:
         """konversi notasi tuts tunggal ke flat atau sharp"""
-        return convert_tuts_to_notasi(self.args.tuts, self.args.notasi)
+        return convert_tuts_to_notasi(kunci, notasi)
     
-    def buat_interval(self) -> dict[str, str]:
+    def buat_interval(self, interval: str) -> dict[str, str]:
         """ambil data interval"""
         mapping = {
             "mayor": mayor,
@@ -30,32 +29,38 @@ class RunChord:
             "diminished": diminished,
             "augmented": augmented
         }
-        return mapping[self.args.interval].simbol
+        return mapping[interval].simbol
     
-    def judul(self):
+    def judul(self, interval: str) -> str:
         """ambil data judul dari metode buat_interval"""
-        return self.buat_interval().get("title")
+        return self.buat_interval(interval).get("title")
     
     def ambil_simbol(self, tuts: str) -> dict[str, str]:
         """membuat data tangga nada baru dan simbol sebagai nilai tuts sebegai kunci"""
         # ambil simbol dari interval
-        mode = self.buat_interval()
+        mode = self.buat_interval(self.args.interval)
         vsimbol = SplitDict(mode[self.args.interval])
         # validasi simbol
         return {f"{tuts}{v[0]}": v[1] for v in Note.quality if v[1] in vsimbol.nilai()}
+    
+    def notasi(self, nn: str) -> list[str]:
+        """mengembalikan notasi flat atau sharp berdasarkan nn"""
+        return Note.sharp if nn == "sharp" else Note.flat
         
     def olah_data(self) -> dict:
         """membuat dan menyimpan notasi dan tangga baru"""
-        kunci = self.coversi_notasi_tuts()
-        notasi = Note.sharp if self.args.notasi == "sharp" else Note.flat
+        judul = self.judul(self.args.interval)
+        kunci = self.coversi_notasi_tuts(self.args.tuts, self.args.notasi)
+        notasi = self.notasi(self.args.notasi)
         tangga_baru = self.ambil_simbol(kunci)
-        return {"kunci": kunci, "notasi": notasi, "tangga_nada": tangga_baru}
+        return {"judul": judul, "kunci": kunci, "notasi": notasi, "tangga_nada": tangga_baru}
     
     def tampil_ke_terminal(self) -> None:
+        """menampilkan data ke terminal"""
         data_baru = self.olah_data()
         print()
-        print(f"Tangga nada {data_baru.get("kunci")} {self.judul()}")
-        print(f"Simbol : {data_baru.get("kunci")}{Note.stn[self.judul()]}")
+        print(f"Tangga nada {data_baru.get("kunci")} {data_baru.get("judul")}")
+        print(f"Simbol : {data_baru.get("kunci")}{Note.stn[data_baru.get("judul")]}")
         print()
         # tampilkan hasil
         for x, y in data_baru.get("tangga_nada").items():
@@ -69,3 +74,104 @@ class RunChord:
             else:
                 print(f"Akor : {x} = {hasil}")
         print()
+
+class RunScale:
+    def __init__(self, args: dict[str, str]):
+        self.args = args
+
+    def validate_string(self):
+        """Fungsi untuk validasi string"""
+        error = validate_tuts(self.args.tuts)
+        if error:
+            print(error)
+            return
+        
+    def coversi_notasi_tuts(self, kunci: str, notasi: str) -> str:
+        """konversi notasi tuts tunggal ke flat atau sharp"""
+        return convert_tuts_to_notasi(kunci, notasi)
+    
+    def tangga_nada_universal(self, kunci: str, interval: dict[str, str], notasi: str) -> str:
+        """membuat skala dari akar kunci, interval dan notasi"""
+        return rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval, use=notasi)
+
+    def tangga_major(self) -> dict[str, str]:
+        """tangga nada major"""
+        return SplitDict(Diatonik.mayor["tangga_nada"])
+    
+    def tangga_minor(self) -> dict[str, str]:
+        """tangga nada minor"""
+        return SplitDict(Diatonik.minor["tangga_nada"])
+    
+    def buat_interval(self, interval: str) -> dict[str, any]:
+        """ambil data interval"""
+        mapping = {
+            "mayor": "mayor",
+            "mayor_pentatonik": "mayor_pentatonik",
+            "minor": "minor",
+            "minor_harmonik": "minor_harmonik",
+            "minor_melodik": "minor_melodik",
+            "minor_pentatonik": "minor_pentatonik",
+            "blues": "blues",
+            "whole_tone": "whole_tone",
+            "kromatik": "kromatik"
+        }
+        map = mapping[interval]
+        return {"nama_interval": map, "interval": Note.tangga_nada["tangga_nada"][map]}
+    
+    def notasi(self, nn: str) -> list[str]:
+        """mengembalikan notasi flat atau sharp berdasarkan nn"""
+        return Note.sharp if nn == "sharp" else Note.flat
+    
+    def tampilkan_ke_terminal(self) -> None:
+        """menampilkan data ke terminal"""
+        kunci = self.coversi_notasi_tuts(self.args.tuts, self.args.notasi)
+        interval = self.buat_interval(self.args.interval)
+        notasi = self.notasi(self.args.notasi)
+        rtn = self.tangga_nada_universal(kunci, interval.get("interval"), notasi)
+        tminor = self.tangga_minor()
+        tmayor = self.tangga_major()
+        if self.args.verbose:
+            print()
+            print(f"Tangga nada : {kunci}")
+            print(f"Simbol : {kunci}{Note.stn.get(interval.get("nama_interval"), '')}")
+            print(f"Interval : {interval.get("interval")}")
+            print(f"Notasi : {self.args.notasi}")
+            print(f"\nSkala : {kunci} {interval.get("nama_interval").replace("_", " ")}:\n{' - '.join(rtn)}")
+            print("\nNilai setiap nada dalam skala:")
+            for i, note in enumerate(rtn):
+                der = Note.derajat.get(i+1, f"{i+1}")
+                print(f"{i+1}. {note} ({der})")
+            # Diatonik hanya untuk mayor/minor
+            if interval.get("nama_interval") == "mayor":
+                print(f"\nTangga nada diatonik : {kunci}{Note.stn[interval.get("nama_interval")]}")
+                tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
+                for k, v in zip(tmayor.kunci(), tgmayor):
+                    print(f"{k} : {v}")
+                print()
+            if interval.get("nama_interval") == "minor":
+                print(f"\nTangga nada diatonik : {kunci}{Note.stn[interval.get("nama_interval")]}")
+                tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
+                for k, v in zip(tminor.kunci(), tgminor):
+                    print(f"{k} : {v}")
+                print()
+        else:
+            print(f"Simbol : {kunci}{Note.stn.get(interval.get("nama_interval"), '')}")
+            print(f"\nSkala : {kunci} {interval.get("nama_interval").replace("_", " ")}:\n{' - '.join(rtn)}\n")
+            print(f"{kunci} {interval.get("nama_interval")} = {rtn}\n")
+            print("Nilai setiap nada dalam skala:")
+            for i, note in enumerate(rtn):
+                der = Note.derajat.get(i+1, f"{i+1}")
+                print(f"{i+1}. {note} ({der})")
+            # Diatonik hanya untuk mayor/minor
+            if interval.get("nama_interval") == "mayor":
+                print(f"\nTangga nada diatonik : {kunci}{Note.stn[interval.get("nama_interval")]}")
+                tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
+                for k, v in zip(tmayor.kunci(), tgmayor):
+                    print(f"{k} : {v}")
+                print()
+            if interval.get("nama_interval") == "minor":
+                print(f"\nTangga nada diatonik : {kunci}{Note.stn[interval.get("nama_interval")]}")
+                tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
+                for k, v in zip(tminor.kunci(), tgminor):
+                    print(f"{k} : {v}")
+                print()
