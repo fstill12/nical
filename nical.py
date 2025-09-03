@@ -1,126 +1,23 @@
 import argparse
-from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi, is_valid_akor
-from teori.interval import mayor, minor, diminished, augmented
-from teori.interval.note import Note, Diatonik
+from teori import achord, validate_tuts, convert_tuts_to_notasi, is_valid_akor
+from teori.interval.note import Note
+from apps import RunChord, RunScale
 import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
-# run_chord - Fungsi untuk menangani perintah 'chord'
 def run_chord(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'chord'."""
-    error = validate_tuts(args.tuts)
-    if error:
-        print(error)
-        return
-
-    kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
-    n = Note.sharp if args.notasi == "sharp" else Note.flat
-    # validasi interval
-    mapping = {
-        "mayor": mayor,
-        "minor": minor,
-        "diminished": diminished,
-        "augmented": augmented
-    }
-
-    mode = mapping[args.interval]
-    # ambil simbol dari interval
-    vsimbol = SplitDict(mode.simbol[args.interval])
-    # validasi simbol
-    chords = {f"{kunci}{v[0]}": v[1] for v in Note.quality if v[1] in vsimbol.nilai()}
-    print()
-    print(f"Tangga nada {kunci} {mode.simbol['title']}")
-    print(f"Simbol : {kunci}{Note.stn[mode.simbol['title']]}")
-    print()
-    # tampilkan hasil
-    for x, y in chords.items():
-        hasil = achord(note=n, tuts=kunci, q=y)
-        if args.verbose:
-            print()
-            print(f"Tangga nada : {kunci}")
-            print(f"Interval : {x.replace('C', kunci).title()}")
-            print(f"Notasi : {args.notasi.title()}")
-            print(f"Akor : {x} = {hasil}")
-        else:
-            print(f"Akor : {x} = {hasil}")
-    print()
+    rc = RunChord(args)
+    rc.validate_string()
+    rc.tampil_ke_terminal()
 
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'scale'."""
-    error = validate_tuts(args.tuts)
-    if error:
-        print(error)
-        return
-    # ambil kunci dan nilai menjadi data
-    tmayor = SplitDict(Diatonik.mayor["tangga_nada"])
-    tminor = SplitDict(Diatonik.minor["tangga_nada"])
-    # ambil kunci dari argumen tuts
-    kunci = convert_tuts_to_notasi(args.tuts, args.notasi)
-    # ambil tangga nada kromatik sharp atau flat 
-    n = Note.sharp if args.notasi == "sharp" else Note.flat
-    # map argumen pilihan untuk --interval atau -i
-    mapping = {
-        "mayor": "mayor",
-        "mayor_pentatonik": "mayor_pentatonik",
-        "minor": "minor",
-        "minor_harmonik": "minor_harmonik",
-        "minor_melodik": "minor_melodik",
-        "minor_pentatonik": "minor_pentatonik",
-        "blues": "blues",
-        "whole_tone": "whole_tone",
-        "kromatik": "kromatik"
-    }
-    map = mapping[args.interval]
-    interval = Note.tangga_nada["tangga_nada"][map]
-    rtn = rumus_tangga_nada.build_scale(root_name=kunci, intervals=interval, use=n)
-    # tampilkan hasil
-    if args.verbose:
-        print()
-        print(f"Tangga nada : {kunci}")
-        print(f"Simbol : {kunci}{Note.stn.get(map, '')}")
-        print(f"Interval : {map}")
-        print(f"Notasi : {args.notasi}")
-        print(f"\nSkala : {kunci} {map}:\n{' - '.join(rtn)}")
-        print("\nNilai setiap nada dalam skala:")
-        for i, note in enumerate(rtn):
-            der = Note.derajat.get(i+1, f"{i+1}")
-            print(f"{i+1}. {note} ({der})")
-        # Diatonik hanya untuk mayor/minor
-        if map == "mayor":
-            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
-            for k, v in zip(tmayor.kunci(), tgmayor):
-                print(f"{k} : {v}")
-            print()
-        if map == "minor":
-            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
-            for k, v in zip(tminor.kunci(), tgminor):
-                print(f"{k} : {v}")
-            print()
-    else:
-        print(f"Simbol : {kunci}{Note.stn.get(map, '')}")
-        print(f"\nSkala : {kunci} {map.title()}:\n{' - '.join(rtn)}\n")
-        print(f"{kunci} {map.title()} = {rtn}\n")
-        print("Nilai setiap nada dalam skala:")
-        for i, note in enumerate(rtn):
-            der = Note.derajat.get(i+1, f"{i+1}")
-            print(f"{i+1}. {note} ({der})")
-        # Diatonik hanya untuk mayor/minor
-        if map == "mayor":
-            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tgmayor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tmayor.nilai())]
-            for k, v in zip(tmayor.kunci(), tgmayor):
-                print(f"{k} : {v}")
-            print()
-        if map == "minor":
-            print(f"\nTangga nada diatonik : {kunci}{Note.stn[map]}")
-            tgminor = [f"{rtn[t]}{Note.stn[s]}" for t, s in enumerate(tminor.nilai())]
-            for k, v in zip(tminor.kunci(), tgminor):
-                print(f"{k} : {v}")
-            print()
+    rs = RunScale(args)
+    rs.validate_string()
+    rs.tampilkan_ke_terminal()
 
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
