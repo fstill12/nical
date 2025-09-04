@@ -1,9 +1,15 @@
 from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi, is_valid_akor
 from teori.interval import mayor, minor, diminished, augmented
 from teori.interval.note import Note, Diatonik
-import sys
+from typing import Union
+import json
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
+
+Flat = str
+Sharp = str
+Huruf = str
+Angka = str
 
 class RunChord:
     def __init__(self, args: dict[str, str]):
@@ -75,6 +81,12 @@ class RunChord:
                 print(f"Akor : {x} = {hasil}")
         print()
 
+    def set_json(self) -> None:
+        """membuat data json"""
+        data_baru = self.olah_data()
+        with open("simpan/hasi.json", "w") as f:
+            json.dump(data_baru, f, indent=4)
+
 class RunScale:
     def __init__(self, args: dict[str, str]):
         self.args = args
@@ -102,25 +114,36 @@ class RunScale:
         """tangga nada minor"""
         return SplitDict(Diatonik.minor["tangga_nada"])
     
+    def jenis_interval(self) -> tuple:
+        """menyimpan jenis interval ke dalam tuple"""
+        return ['mayor', 'mayor_pentatonik', 'minor', 
+                          'minor_harmonik', 'minor_melodik', 'minor_pentatonik', 
+                          'blues', 'whole_tone', 'kromatik']
+    
     def buat_interval(self, interval: str) -> dict[str, any]:
         """ambil data interval"""
-        mapping = {
-            "mayor": "mayor",
-            "mayor_pentatonik": "mayor_pentatonik",
-            "minor": "minor",
-            "minor_harmonik": "minor_harmonik",
-            "minor_melodik": "minor_melodik",
-            "minor_pentatonik": "minor_pentatonik",
-            "blues": "blues",
-            "whole_tone": "whole_tone",
-            "kromatik": "kromatik"
-        }
+        jenis_interval = self.jenis_interval()
+        mapping = dict(zip(jenis_interval, jenis_interval))
         map = mapping[interval]
         return {"nama_interval": map, "interval": Note.tangga_nada["tangga_nada"][map]}
     
     def notasi(self, nn: str) -> list[str]:
         """mengembalikan notasi flat atau sharp berdasarkan nn"""
         return Note.sharp if nn == "sharp" else Note.flat
+    
+    def set_json(self, kunci: Huruf, notasi: Union[Flat, Sharp], tangga: Angka) -> None:
+        """membuat file json tangga nada berdasarkan argumennya"""
+        angka_kunci = [i+1 for i in range(9)]
+        jenis_interval = self.jenis_interval()
+        mapping = dict(zip(angka_kunci, jenis_interval))
+        kunci = self.coversi_notasi_tuts(kunci, notasi)
+        if tangga in list(mapping.keys()):
+            interval = self.buat_interval(mapping.get(tangga))
+        notasi = self.notasi(notasi)
+        rtn = self.tangga_nada_universal(kunci, interval.get("interval"), notasi)
+        # membuat file json
+        with open("simpan/data.json", "w") as f:
+            json.dump(rtn, f, indent=4)
     
     def tampilkan_ke_terminal(self) -> None:
         """menampilkan data ke terminal"""
