@@ -1,7 +1,7 @@
 from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi, is_valid_akor
 from teori.interval import mayor, minor, diminished, augmented
 from teori.interval.note import Note, Diatonik
-import sys
+import json
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
@@ -74,6 +74,12 @@ class RunChord:
             else:
                 print(f"Akor : {x} = {hasil}")
         print()
+
+    def set_json(self) -> None:
+        """membuat data json"""
+        data_baru = self.olah_data()
+        with open("simpan/hasi.json", "w") as f:
+            json.dump(data_baru, f, indent=4)
 
 class RunScale:
     def __init__(self, args: dict[str, str]):

@@ -11,6 +11,7 @@ def run_chord(args: argparse.Namespace):
     rc = RunChord(args)
     rc.validate_string()
     rc.tampil_ke_terminal()
+    rc.set_json()
 
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
