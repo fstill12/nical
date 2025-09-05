@@ -198,3 +198,50 @@ class RunScale:
                 for k, v in zip(tminor.kunci(), tgminor):
                     print(f"{k} : {v}")
                 print()
+
+
+class RunAnalyze:
+    """kelas untuk menganalisis tuts/nada dan menebak jenis akor"""
+    def __init__(self, args: dict[str, str]):
+        self.args = args
+
+    def validate_string(self):
+        """Fungsi untuk validasi string"""
+        akor_valid = self.cek_akor(self.args.tuts)
+        for t in akor_valid:
+            error = validate_tuts(t)
+            if error:
+                print(error)
+                return
+        
+    def notasi(self, nn: str) -> list[str]:
+        """mengembalikan notasi flat atau sharp berdasarkan nn"""
+        return Note.sharp if nn == "sharp" else Note.flat
+    
+    def cek_akor(self, kunci: Huruf):
+        """cek input adalah akor"""
+        return is_valid_akor(kunci)
+    
+    def cek_kecocokan(self, kunci: Huruf, notasi: Union[Flat, Sharp], akor: list) -> list:
+        """Cek kecocokan dengan kualitas akor yang ada"""
+        cocok = []
+        for nama, interval in Note.quality:
+            hasil = achord(note=notasi, tuts=kunci, q=interval)
+            if set(hasil) == set(akor):
+                cocok.append(nama)
+        return cocok
+
+    def tampilkan_ke_terminal(self):
+        """menampilkan ke layar"""
+        akor_valid = self.cek_akor(self.args.tuts)
+        kunci = convert_tuts_to_notasi(akor_valid[0], self.args.notasi)
+        n = self.notasi(self.args.notasi)
+        # Cek kecocokan dengan kualitas akor yang ada
+        cocok = self.cek_kecocokan(kunci=kunci, notasi=n, akor=akor_valid)
+        print(f"\nAnalisis untuk tuts: {self.args.tuts}")
+        if cocok:
+            print("Kemungkinan akor:")
+            for nama in cocok:
+                print(f"- {kunci}{nama}")
+        else:
+            print("Tidak ditemukan akor yang cocok.")
