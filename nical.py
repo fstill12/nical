@@ -1,7 +1,5 @@
 import argparse
-from teori import achord, validate_tuts, convert_tuts_to_notasi, is_valid_akor
-from teori.interval.note import Note
-from apps import RunChord, RunScale
+from apps import RunChord, RunScale, RunAnalyze
 import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
@@ -24,30 +22,9 @@ def run_scale(args: argparse.Namespace):
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
     """Fungsi untuk menganalisis tuts/nada dan menebak jenis akor."""
-    tuts_list = is_valid_akor(args.tuts)
-    for t in tuts_list:
-        error = validate_tuts(t)
-        if error:
-            print(error)
-            return
-
-    kunci = convert_tuts_to_notasi(tuts_list[0], args.notasi)
-    n = Note.sharp if args.notasi == "sharp" else Note.flat
-
-    # Cek kecocokan dengan kualitas akor yang ada
-    cocok = []
-    for nama, interval in Note.quality:
-        hasil = achord(note=n, tuts=kunci, q=interval)
-        if set(hasil) == set(tuts_list):
-            cocok.append(nama)
-
-    print(f"\nAnalisis untuk tuts: {args.tuts}")
-    if cocok:
-        print("Kemungkinan akor:")
-        for nama in cocok:
-            print(f"- {kunci}{nama}")
-    else:
-        print("Tidak ditemukan akor yang cocok.")
+    ra = RunAnalyze(args)
+    ra.validate_string()
+    ra.tampilkan_ke_terminal()
 
 # run_placeholder - Fungsi placeholder untuk perintah yang masih dalam pengembangan
 def run_placeholder(command_name: str):
