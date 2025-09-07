@@ -6,10 +6,10 @@ import json
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
 
-Flat = str
-Sharp = str
-Huruf = str
-Angka = str
+type Flat = str
+type Sharp = str
+type Huruf = str
+type Angka = str
 
 class RunChord:
     def __init__(self, args: dict[str, str]):
