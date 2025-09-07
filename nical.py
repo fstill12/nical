@@ -6,7 +6,7 @@ import sys
 
 def run_chord(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'chord'."""
-    rc = RunChord(args)
+    rc = RunChord(vars(args))  # konversi Namespace ke dict
     valid = rc.validate_string()
     if not valid:
         print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
@@ -16,7 +16,7 @@ def run_chord(args: argparse.Namespace):
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'scale'."""
-    rs = RunScale(args)
+    rs = RunScale(vars(args))
     valid = rs.validate_string()
     if not valid:
         print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
@@ -26,7 +26,7 @@ def run_scale(args: argparse.Namespace):
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
     """Fungsi untuk menganalisis tuts/nada dan menebak jenis akor."""
-    ra = RunAnalyze(args)
+    ra = RunAnalyze(vars(args))
     valid = ra.validate_string()
     if not valid:
        print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
@@ -82,8 +82,9 @@ def main():
         "chord -h --help": chord_parser, "scale -h --help": scale_parser, 
           "analyze -h --help": analyze_parser, "suggest -h --help": suggest_parser
         } # daftar perintah bantuan
-    nc = sys.argv # ambil argumen dari command line
+    nc = sys.argv
     if len(nc) == 1:
+        print("Silakan masukkan perintah. Gunakan -h untuk bantuan.")
         parser.print_help()
         sys.exit()
     else:
