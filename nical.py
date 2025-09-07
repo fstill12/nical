@@ -1,5 +1,5 @@
 import argparse
-from apps import RunChord, RunScale, RunAnalyze
+from apps import RunChord, RunScale, RunAnalyze, RunSuggest
 import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
@@ -32,6 +32,11 @@ def run_analyze(args: argparse.Namespace):
        print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
     else: 
         ra.tampilkan_ke_terminal()
+
+def run_suggest(args: argparse.Namespace):
+    """Fungsi untuk memberikan saran progresi akor."""
+    rs = RunSuggest(vars(args))
+    rs.tampilkan_ke_terminal()
 
 # run_placeholder - Fungsi placeholder untuk perintah yang masih dalam pengembangan
 def run_placeholder(command_name: str):
@@ -74,8 +79,11 @@ def main():
     analyze_parser.set_defaults(func=run_analyze)
 
     # suggest
-    suggest_parser = subparsers.add_parser("suggest", help="(Dalam pengembangan) Rekomendasi progresi akor")
-    suggest_parser.set_defaults(func=run_placeholder("suggest"))
+    suggest_parser = subparsers.add_parser("suggest", help="Rekomendasi progresi akor")
+    suggest_parser.add_argument("-t", "--tuts", help="Tuts dasar (misal: C, D#, Bb)")
+    suggest_parser.add_argument("-n", "--notasi", choices=["sharp", "flat"], default="sharp", help="Jenis notasi (# atau b)")
+    suggest_parser.add_argument("--tipe", choices=["mayor", "minor"], default="mayor", help="Jenis progresi akor")
+    suggest_parser.set_defaults(func=run_suggest)
 
     # help
     set_args_parse = {
