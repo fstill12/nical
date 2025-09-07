@@ -1,5 +1,5 @@
 import unittest
-from ..apps import RunChord, RunScale, RunAnalyze
+from apps import RunChord, RunScale, RunAnalyze
 
 class TestRunChord(unittest.TestCase):
     def setUp(self):
