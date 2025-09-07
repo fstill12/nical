@@ -201,6 +201,37 @@ class RunAnalyze(Utils):
 
 @dataclass
 class RunSuggest(Utils):
-    """Placeholder untuk fitur suggest progresi akor."""
+    """Rekomendasi progresi akor berdasarkan tuts dan notasi."""
+
+    def rekomendasi_progresi(self, tipe: str = "mayor") -> list[list[str]]:
+        # Progresi umum mayor dan minor (rujukan: Hooktheory, MusicTheory.net, dsb)
+        progresi_mayor = [
+            ["I", "IV", "V", "I"],      # klasik
+            ["I", "vi", "IV", "V"],     # pop
+            ["ii", "V", "I"],           # jazz turnaround
+            ["I", "V", "vi", "IV"],     # axis progression
+        ]
+        progresi_minor = [
+            ["i", "iv", "V", "i"],      # klasik minor
+            ["i", "VI", "III", "VII"],  # pop minor
+            ["ii°", "V", "i"],          # jazz minor
+        ]
+        return progresi_mayor if tipe == "mayor" else progresi_minor
+
     def tampilkan_ke_terminal(self):
-        print("Fitur suggest progresi akor masih dalam pengembangan.")
+        tuts = self.args.get("tuts", "C")
+        notasi = self.args.get("notasi", "sharp")
+        tipe = self.args.get("tipe", "mayor")
+        kunci = convert_tuts_to_notasi(tuts, notasi)
+        progresi_list = self.rekomendasi_progresi(tipe)
+        print(f"\nRekomendasi progresi akor untuk {kunci} {tipe}:")
+        for idx, progresi in enumerate(progresi_list, 1):
+            akor = []
+            for derajat in progresi:
+                if tipe == "mayor":
+                    simbol = Diatonik.mayor["tangga_nada"].get(derajat, "")
+                else:
+                    simbol = Diatonik.minor["tangga_nada"].get(derajat, "")
+                akor.append(f"{kunci}{Note.stn.get(simbol, '')}{simbol if simbol else ''}")
+            print(f"Progresi {idx}: {' - '.join(akor)}")
+        print()
