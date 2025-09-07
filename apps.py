@@ -1,4 +1,4 @@
-from teori import achord, rumus_tangga_nada, SplitDict, validate_tuts, convert_tuts_to_notasi, is_valid_akor
+from teori import achord, rumus_tangga_nada, SplitDict, convert_tuts_to_notasi, is_valid_akor, is_valid_str
 from teori.interval import mayor, minor, diminished, augmented
 from teori.interval.note import Note, Diatonik
 from typing import Union
@@ -11,16 +11,22 @@ type Sharp = str
 type Huruf = str
 type Angka = str
 
-class RunChord:
+
+class Utils:
     def __init__(self, args: dict[str, str]):
         self.args = args
 
-    def validate_string(self):
+    def validate_string(self) -> bool:
         """Fungsi untuk validasi string"""
-        error = validate_tuts(self.args.tuts)
-        if error:
-            print(error)
-            return
+        return is_valid_str(self.args.tuts)
+    
+    def notasi(self, nn: str) -> list[str]:
+        """mengembalikan notasi flat atau sharp berdasarkan nn"""
+        return Note.sharp if nn == "sharp" else Note.flat
+
+class RunChord(Utils):
+    def __init__(self, args: dict[str, str]):
+        super().__init__(args=args)
         
     def coversi_notasi_tuts(self, kunci: str, notasi: str) -> str:
         """konversi notasi tuts tunggal ke flat atau sharp"""
@@ -87,16 +93,9 @@ class RunChord:
         with open("simpan/hasi.json", "w") as f:
             json.dump(data_baru, f, indent=4)
 
-class RunScale:
+class RunScale(Utils):
     def __init__(self, args: dict[str, str]):
-        self.args = args
-
-    def validate_string(self):
-        """Fungsi untuk validasi string"""
-        error = validate_tuts(self.args.tuts)
-        if error:
-            print(error)
-            return
+        super().__init__(args=args)
         
     def coversi_notasi_tuts(self, kunci: str, notasi: str) -> str:
         """konversi notasi tuts tunggal ke flat atau sharp"""
@@ -126,10 +125,6 @@ class RunScale:
         mapping = dict(zip(jenis_interval, jenis_interval))
         map = mapping[interval]
         return {"nama_interval": map, "interval": Note.tangga_nada["tangga_nada"][map]}
-    
-    def notasi(self, nn: str) -> list[str]:
-        """mengembalikan notasi flat atau sharp berdasarkan nn"""
-        return Note.sharp if nn == "sharp" else Note.flat
     
     def set_json(self, kunci: Huruf, notasi: Union[Flat, Sharp], tangga: Angka) -> None:
         """membuat file json tangga nada berdasarkan argumennya"""
@@ -200,23 +195,14 @@ class RunScale:
                 print()
 
 
-class RunAnalyze:
+class RunAnalyze(Utils):
     """kelas untuk menganalisis tuts/nada dan menebak jenis akor"""
     def __init__(self, args: dict[str, str]):
-        self.args = args
+        super().__init__(args=args)
 
-    def validate_string(self):
+    def validate_string(self) -> bool:
         """Fungsi untuk validasi string"""
-        akor_valid = self.cek_akor(self.args.tuts)
-        for t in akor_valid:
-            error = validate_tuts(t)
-            if error:
-                print(error)
-                return
-        
-    def notasi(self, nn: str) -> list[str]:
-        """mengembalikan notasi flat atau sharp berdasarkan nn"""
-        return Note.sharp if nn == "sharp" else Note.flat
+        return is_valid_akor(self.args.tuts)
     
     def cek_akor(self, kunci: Huruf):
         """cek input adalah akor"""

@@ -7,22 +7,31 @@ import sys
 def run_chord(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'chord'."""
     rc = RunChord(args)
-    rc.validate_string()
-    rc.tampil_ke_terminal()
+    valid = rc.validate_string()
+    if not valid:
+        print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
+    else:
+        rc.tampil_ke_terminal()
 
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
     """Fungsi untuk menangani perintah 'scale'."""
     rs = RunScale(args)
-    rs.validate_string()
-    rs.tampilkan_ke_terminal()
+    valid = rs.validate_string()
+    if not valid:
+        print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
+    else:
+        rs.tampilkan_ke_terminal()
 
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
     """Fungsi untuk menganalisis tuts/nada dan menebak jenis akor."""
     ra = RunAnalyze(args)
-    ra.validate_string()
-    ra.tampilkan_ke_terminal()
+    valid = ra.validate_string()
+    if not valid:
+       print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
+    else: 
+        ra.tampilkan_ke_terminal()
 
 # run_placeholder - Fungsi placeholder untuk perintah yang masih dalam pengembangan
 def run_placeholder(command_name: str):
