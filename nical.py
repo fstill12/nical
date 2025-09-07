@@ -1,5 +1,5 @@
 import argparse
-from apps import RunChord, RunScale, RunAnalyze, RunSuggest
+from musik.apps import RunChord, RunScale, RunAnalyze, RunSuggest
 import sys
 
 # MusikaCLI.py - Aplikasi pembuat akor musik
