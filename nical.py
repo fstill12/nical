@@ -9,7 +9,6 @@ def run_chord(args: argparse.Namespace):
     rc = RunChord(args)
     rc.validate_string()
     rc.tampil_ke_terminal()
-    rc.set_json()
 
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
@@ -17,7 +16,6 @@ def run_scale(args: argparse.Namespace):
     rs = RunScale(args)
     rs.validate_string()
     rs.tampilkan_ke_terminal()
-    rs.set_json('C', 'flat', 3)
 
 # run_analyze - Fungsi untuk menganal isis tuts/nada dan menebak jenis akor
 def run_analyze(args: argparse.Namespace):
