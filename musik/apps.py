@@ -1,6 +1,9 @@
-from teori import achord, rumus_tangga_nada, SplitDict, convert_tuts_to_notasi, is_valid_akor, is_valid_str
-from teori.interval import mayor, minor, diminished, augmented
-from teori.interval.note import Note, Diatonik
+from .teori.achord import achord
+from .teori.interval import mayor, minor, diminished, augmented
+from .utils.note import Note, Diatonik
+from .utils import rumus_tangga_nada
+from .utils.split import SplitDict
+from .utils.validate import convert_tuts_to_notasi, is_valid_akor, is_valid_str
 from typing import Union
 from dataclasses import dataclass
 import json
