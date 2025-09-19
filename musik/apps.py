@@ -15,6 +15,18 @@ type Sharp = str
 type Huruf = str
 type Angka = str
 
+
+@dataclass
+class Tangga:
+    __nada: dict[str, str]
+
+    def __post_init__(self):
+        self.data = SplitDict(self.__nada)
+
+    @property    
+    def nada(self):
+        return self.data
+
 @dataclass
 class Utils:
     args: dict[str, str]
@@ -52,9 +64,9 @@ class RunChord(Utils):
         """membuat data tangga nada baru dan simbol sebagai nilai tuts sebegai kunci"""
         # ambil simbol dari interval
         mode = self.buat_interval(self.args["interval"])
-        vsimbol = SplitDict(mode[self.args["interval"]])
+        tangga_nada = Tangga(mode[self.args["interval"]])
         # validasi simbol
-        return {f"{tuts}{v[0]}": v[1] for v in Note.quality if v[1] in vsimbol.nilai()}
+        return {f"{tuts}{v[0]}": v[1] for v in Note.quality if v[1] in tangga_nada.nada.nilai()}
     
     def olah_data(self) -> dict:
         """membuat dan menyimpan notasi dan tangga baru"""
