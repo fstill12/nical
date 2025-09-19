@@ -1,0 +1,80 @@
+from dataclasses import dataclass
+from teori.interval import mayor, minor, diminished, augmented
+from utils.note import Note, Diatonik
+from utils.split import SplitDict
+
+@dataclass
+class DataKonstanta:
+    """ambil data dari paket musik.utils.note atau musik.teori.interval"""
+    __data: dict[str, str]
+
+    @property
+    def getDict(self) -> SplitDict:
+        datas = SplitDict(self.__data)
+        return datas
+    
+
+@dataclass
+class Akor:
+    """ambil konci dari semua data dari paket musik.teori.interval"""
+    __tangga: str
+
+    def __post_init__(self):
+        if self.__tangga in ['major', 'mayor']:
+            self.__nada = mayor.simbol.get('mayor')
+        if self.__tangga == ['minor', 'min']:
+            self.__nada = minor.simbol.get('minor')
+        if self.__tangga == ['diminished', 'dim]']:
+            self.__nada = diminished.simbol.get('diminished')
+        if self.__tangga in ["augmented", "aug"]:
+            self.__nada = augmented.simbol.get('augmented')
+
+    @property
+    def getData(self) -> list[str]:
+        dd = DataKonstanta(self.__nada.simbol)
+        return dd.get_data.kunci()
+    
+@dataclass
+class getArray:
+    array: list
+    
+@dataclass
+class Error:
+    error: str
+
+@dataclass
+class Utilitis:
+    util: str
+
+    def __post_init__(self):
+        note = {
+            'flat': Note.flat, 
+            'sharp': Note.sharp, 
+            'tangga': Note.tangga_nada, 
+            'derajat': Note.derajat,
+            'simbol': Note.stn, 
+            'kualitis': Note.quality,
+            'mayor': Diatonik.mayor,
+            'minor': Diatonik.minor
+        }
+        semua = DataKonstanta(note)
+        if self.util in semua.getDict.kunci():
+            self.utilitas = note.get(self.util)
+        else:
+            self.__error = self.util
+
+    @property
+    def cekUtils(self) -> getArray | DataKonstanta:
+        """perikas error parameter"""
+        try:
+            if isinstance(self.utilitas, list):
+                return getArray(self.utilitas)
+            if isinstance(self.utilitas, dict):
+                return DataKonstanta(self.utilitas)
+        except AttributeError:
+            return Error(self.__error)
+
+
+if __name__=="__main__":
+    tt = Utilitis('flat')
+    print(tt.cekUtils.array)
