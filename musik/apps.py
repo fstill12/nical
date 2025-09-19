@@ -1,9 +1,9 @@
-from teori.achord import achord
-from teori.interval import mayor, minor, diminished, augmented
-from utils.note import Note, Diatonik
-from utils import rumus_tangga_nada
-from utils.split import SplitDict
-from utils.validate import convert_tuts_to_notasi, is_valid_akor, is_valid_str
+from .teori.achord import achord
+from .teori.interval import mayor, minor, diminished, augmented
+from .utils.note import Note, Diatonik
+from .utils import rumus_tangga_nada
+from .utils.split import SplitDict
+from .utils.validate import convert_tuts_to_notasi, is_valid_akor, is_valid_str
 from typing import Union
 from dataclasses import dataclass
 import json
@@ -64,9 +64,9 @@ class RunChord(Utils):
         """membuat data tangga nada baru dan simbol sebagai nilai tuts sebegai kunci"""
         # ambil simbol dari interval
         mode = self.buat_interval(self.args["interval"])
-        vsimbol = SplitDict(mode[self.args["interval"]])
+        tangga_nada = Tangga(mode[self.args["interval"]])
         # validasi simbol
-        return {f"{tuts}{v[0]}": v[1] for v in Note.quality if v[1] in vsimbol.nilai()}
+        return {f"{tuts}{v[0]}": v[1] for v in Note.quality if v[1] in tangga_nada.nada.nilai()}
     
     def olah_data(self) -> dict:
         """membuat dan menyimpan notasi dan tangga baru"""

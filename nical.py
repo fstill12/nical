@@ -11,7 +11,7 @@ def run_chord(args: argparse.Namespace):
     if not valid:
         print("Kesalahan: Input hanya boleh berupa huruf A–G diikuti opsional '#' atau 'b'.")
     else:
-        rc.tampil_ke_terminal()
+        rc.tampilkan_ke_terminal()
 
 # run_scale - Fungsi untuk menangani perintah 'scale' 
 def run_scale(args: argparse.Namespace):
