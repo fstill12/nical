@@ -63,7 +63,6 @@ class Utilitis:
         else:
             self.__error = self.util
 
-    @property
     def cekUtils(self) -> getArray | DataKonstanta:
         """perikas error parameter"""
         try:
@@ -77,4 +76,4 @@ class Utilitis:
 
 if __name__=="__main__":
     tt = Utilitis('flat')
-    print(tt.cekUtils.array)
+    print(tt.cekUtils().array)
