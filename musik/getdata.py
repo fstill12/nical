@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from teori.interval import mayor, minor, diminished, augmented
 from utils.note import Note, Diatonik
 from utils.split import SplitDict
+import json
 
 @dataclass
 class DataKonstanta:
@@ -13,7 +14,6 @@ class DataKonstanta:
         datas = SplitDict(self.__data)
         return datas
     
-
 @dataclass
 class Akor:
     """ambil konci dari semua data dari paket musik.teori.interval"""
@@ -35,15 +35,28 @@ class Akor:
         return dd.get_data.kunci()
     
 @dataclass
+class JsonFile:
+    """mengatur berkas json"""
+    path: str
+
+    def jsonfile(self, datafile: any):
+        """membuat data json"""
+        with open(self.path, "w") as f:
+            json.dump(datafile, f, indent=4)
+
+@dataclass
 class getArray:
+    """ambil array"""
     array: list
     
 @dataclass
 class Error:
+    """atur kelasahan"""
     error: str
 
 @dataclass
 class NoteTangga:
+    """interval tangga nada"""
     note = {
         'flat': Note.flat, 
         'sharp': Note.sharp, 
@@ -56,6 +69,7 @@ class NoteTangga:
 
 @dataclass
 class Utilitis:
+    """utilitis data"""
     util: str
 
     def __post_init__(self):
@@ -78,9 +92,14 @@ class Utilitis:
         
     def getNote(self) -> NoteTangga:
         return NoteTangga
+    
+    def setJson(self, path: str) -> JsonFile:
+        return JsonFile(path=path)
 
 
 if __name__=="__main__":
     tt = Utilitis('flat')
+    alamat = "simpan/data.json"
     print(tt.cekUtils().array)
     print(tt.getNote().note)
+    print(tt.setJson(alamat).jsonfile(tt.getNote().note))
